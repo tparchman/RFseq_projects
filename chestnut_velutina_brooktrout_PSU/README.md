@@ -1,25 +1,27 @@
 
 ## Organization and Workflow for GBS for Tepe Solanum and Valentina's house wren samples 
 Organizational notes and code for two sequencing sets:
-- 2 plates from Tepe
-- 1.10 plates from Val (need val to add IDs)
-- 4 mojave ground squirrel samples
+- 4 *Castanea dentata* (CADE, American chestnut) plates from Jill Hamilton
+- 1 plate of *Fraxinus velutina* (FRVE below), collected by Trevor Faske, extracted at AG BIO.
+- ~50 samples of brook trout from Jason Kenagy at PSU
 - see photos of sample organization for HOWR
- 
-## Sample organization
-- Full information on DNAs for each individual sampled across natural distribution can be found in `/GitHub/Tepe23`. This file also has the updated plate maps with specified IDs.
 
-- barcode key files correspond with Tepe23Lib:
-'add here'
+ ![GELIMAGE](md_images/plate_setup.jpg)
+
+## Sample organization
+- Full information on DNAs for each individual sampled across natural distribution can be found in `GitHub/RFseq_projects/chestnut_velutina_brooktrout_PSU/`. This file also has the updated plate maps with specified IDs.
+
+- barcode key file corresponds with CADE_FRVELib:
+
 
 ## Notes on library preparation
 
 
 ### R/L and PCR for plates 1-4. 
 
-- Master mix in `Tepe23_RFseq_mastermixcockatils.xlsx`.
-- Restriction done on 6/26/23
-- Ligation complete on 6/27/23
+- Master mix in `CADE_FRVE_RFseq_mastermixcockatils.xlsx`.
+- Restriction done on 12/13/23
+- Ligation complete on 12/15/23
 
 6/29/23: gel for TEPE23_LIB1
  
