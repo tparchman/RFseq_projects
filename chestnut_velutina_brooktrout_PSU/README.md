@@ -20,8 +20,9 @@ Organizational notes and code for two sequencing sets:
 ### R/L and PCR for plates 1-4. 
 
 - Master mix in `CADE_FRVE_RFseq_mastermixcockatils.xlsx`.
-- Restriction done on 12/13/23
-- Ligation complete on 12/15/23
+- Restriction done on 1/2/24
+- Ligation complete on 1/3/24
+- PCR done on:
 
 6/29/23: gel for TEPE23_LIB1
  
