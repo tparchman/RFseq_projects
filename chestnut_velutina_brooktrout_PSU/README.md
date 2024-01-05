@@ -22,9 +22,9 @@ Organizational notes and code for two sequencing sets:
 - Master mix in `CADE_FRVE_RFseq_mastermixcockatils.xlsx`.
 - Restriction done on 1/2/24
 - Ligation complete on 1/3/24
-- PCR done on:
+- PCR done on: 1/5/24
 
-6/29/23: gel for TEPE23_LIB1
+6/29/23: gel for CADE_FRVE_LIB1
  
 ![GELIMAGE](md_images/TEPE23_LIB1_GEL.jpg)
 
