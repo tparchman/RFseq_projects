@@ -1,5 +1,5 @@
 
-## Organization and Workflow for GBS for Tepe Solanum and Valentina's house wren samples 
+## Organization and Workflow for GBS of American Chestnut, Fraxinus Velutina, and some Brook trout 
 Organizational notes and code for two sequencing sets:
 - 4 *Castanea dentata* (CADE, American chestnut) plates from Jill Hamilton
 - 1 plate of *Fraxinus velutina* (FRVE below), collected by Trevor Faske, extracted at AG BIO.
@@ -24,16 +24,14 @@ Organizational notes and code for two sequencing sets:
 - Ligation complete on 1/3/24
 - PCR done on: 1/5/24
 
-6/29/23: gel for CADE_FRVE_LIB1
- 
-![GELIMAGE](md_images/TEPE23_LIB1_GEL.jpg)
 
-10 ul of each PCR product into final library. Tubes in door of freezer labelled **TEPE23_LIB**.
+
+10 ul of each PCR product into final library. Tubes in door of freezer labelled **CADE_FRVE_LIB**.
 
 
 ## Data analysis: contaminant cleaning, barcode parsing, data storage, directory organization, and initial analyses.
 
-We generated one lane of S1 chemistry NovaSeq data at UTGSAF in August of 2023. 
+We generated two lanes of S1 chemistry NovaSeq data at UTGSAF in March of 2024. 
 
 
 ## This file contains code and notes for
@@ -48,23 +46,28 @@ We generated one lane of S1 chemistry NovaSeq data at UTGSAF in August of 2023.
 
 ## 1. Cleaning contaminants
 
-Being executed on ponderosa using tapioca pipeline. Commands in two bash scripts (cleaning_bash_TEPE23.sh), executed as below (9/11/23).
+Being executed on ponderosa using tapioca pipeline. Commands in two bash scripts (cleaning_bash_CADE_FRVE.sh), executed as below (4/12/24). This work being carried out at:
 
-Decompress fastq file:
+    /working/parchman/CADE_FRVE/
 
-    $ gunzip TEPE23_S133_L002_R1_001.fastq.gz
+Decompress fastq files:
+
+    $ gunzip CADE-FRVE_S1_L001_R1_001.fastq.gz
+    $ gunzip CADE-FRVE_S1_L002_R1_001.fastq.gz
 
 Number of reads **before** cleaning:
 
-    $ nohup grep -c "^@" TEPE23_S133_L002_R1_001.fastq > TEPE23_number_of_rawreads.txt &
-    ## raw reads: 1,020,080,241
+    $ nohup grep -c "^@" CADE-FRVE_S1_L001_R1_001.fastq > L001_number_of_rawreads.txt &
+    ## raw reads: 
 
+    $ nohup grep -c "^@" CADE-FRVE_S1_L002_R1_001.fastq > L002_number_of_rawreads.txt &
+    ## raw reads: 
 To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and run bash scripts.
 
     $ module load fqutils/0.4.1
     $ module load bowtie2/2.2.5
     
-    $ bash cleaning_bash_TEPE23.sh &
+    $ bash cleaning_bash_CADE_FRVE.sh &
 
 
 After .clean.fastq has been produced, rm raw data:
