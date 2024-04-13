@@ -72,7 +72,8 @@ To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and
 
 After .clean.fastq has been produced, rm raw data:
 
-    $ rm -rf TEPE23_S133_L002_R1_001.fastq &
+    $ rm -rf CADE-FRVE_S1_L001_R1_001.fastq &
+    $ rm -rf CADE-FRVE_S1_L002_R1_001.fastq &
 
 
 
@@ -80,9 +81,11 @@ Raw data will stay stored in: /archive/parchman_lab/rawdata_to_backup/FRLA/
 
 Number of reads **after** cleaning:
 
+    $ nohup grep -c "^@" CADE_FRVE1.clean.fastq > CADE_FRVE1_clean_reads.txt &
+    # number of clean reads : 
 
-    $ nohup grep -c "^@" TEPE23.clean.fastq > TEPE23_clean_reads.txt &
-    # number of clean reads : 627,879,872
+    $ nohup grep -c "^@" CADE_FRVE2.clean.fastq > CADE_FRVE2_clean_reads.txt &
+    # number of clean reads : 
 
 ####################################################################################
 ## 2. Barcode parsing:
