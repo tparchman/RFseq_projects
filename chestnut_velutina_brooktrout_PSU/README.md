@@ -134,7 +134,7 @@ Make ids file
 
 Split fastqs by individual
 
-    $ nohup perl splitFastq_universal_regex.pl CADE_FRVE_ids_noheader.txt cat_parsed_CADE_FRVE12.clean.fastq &>/dev/null &
+    $ nohup perl splitFastq_universal_regex.pl CADE_FRVE_ids_noheader.txt cat_CADE_FRVE_1and2.fastq &>/dev/null &
 
 
 
