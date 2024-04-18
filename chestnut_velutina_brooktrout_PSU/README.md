@@ -112,6 +112,10 @@ Parsing CADE_FRVE2 library:
 
     $ less parsereport_CADE_FRVE2.clean.fastq
 
+    Good mids count: 668825901
+    Bad mids count: 47552067
+    Number of seqs with potential MSE adapter in seq: 648922
+    Seqs that were too short after removing MSE and beyond: 4257
 
 ####################################################################################
 ## 3. splitting fastqs
@@ -121,7 +125,7 @@ For FRLA, doing this in `/working/parchman/CADE_FRVE/splitfastqs_CADE_FRVE/`
 
 Concatenate the two parsed_*fastq files:
 
-    $ cat parsed_CADE_FRVE1.clean.fastq parsed_CADE_FRVE2.clean.fastq > cat_parsed_CADE_FRVE12.clean.fastq
+    $ nohup cat parsed_CADE_FRVE1.clean.fastq parsed_CADE_FRVE2.clean.fastq > cat_parsed_CADE_FRVE12.clean.fastq &>/dev/null &
 
 Make ids file
 
