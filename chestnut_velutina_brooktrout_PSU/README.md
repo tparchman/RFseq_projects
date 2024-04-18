@@ -93,37 +93,44 @@ Number of reads **after** cleaning:
 
 Be sure to deactivate conda environment before running the below steps. Barcode keyfiles are `/working/parchman/TEPE23/FRLA1_barcode_key.csv`
 `
-Parsing FRLA1 library:
+Parsing CADE_FRVE1 library:
 
-    $ nohup perl parse_barcodes768.pl TEPE23_barcodekey.csv TEPE23.clean.fastq A00 &>/dev/null &
+    $ nohup perl parse_barcodes768.pl CADE_FRVE_barcode_info_2018.csv CADE_FRVE1.clean.fastq A00 &>/dev/null &
 
+Parsing CADE_FRVE2 library:
 
+    $ nohup perl parse_barcodes768.pl CADE_FRVE_barcode_info_2018.csv CADE_FRVE2.clean.fastq A00 &>/dev/null &
 
-# DONE TO HERE
 `NOTE`: the A00 object is the code that identifies the sequencer (first three characters after the @ in the fastq identifier).
 
-    $ less parsereport_TEPE23.clean.fastq
+    $ less parsereport_CADE_FRVE1.clean.fastq
 
-    Good mids count: 586412516
-    Bad mids count: 41467189
-    Number of seqs with potential MSE adapter in seq: 275328
-    Seqs that were too short after removing MSE and beyond: 167
+    Good mids count: 644098458
+    Bad mids count: 25913131
+    Number of seqs with potential MSE adapter in seq: 197210
+    Seqs that were too short after removing MSE and beyond: 190
+
+    $ less parsereport_CADE_FRVE2.clean.fastq
 
 
 ####################################################################################
 ## 3. splitting fastqs
 ####################################################################################
 
-For FRLA, doing this in `/working/parchman/TEPE23/splitfastqs_TEPE23/*`
+For FRLA, doing this in `/working/parchman/CADE_FRVE/splitfastqs_CADE_FRVE/` 
+
+Concatenate the two parsed_*fastq files:
+
+    $ cat parsed_CADE_FRVE1.clean.fastq parsed_CADE_FRVE2.clean.fastq > cat_parsed_CADE_FRVE12.clean.fastq
 
 Make ids file
 
-    $ cut -f 3 -d "," TEPE23_barcodekey.csv | grep "_" > TEPE23_ids_noheader.txt
+    $ cut -f 3 -d "," CADE_FRVE_barcode_info_2018.csv | grep "[A-Z]" > CADE_FRVE_ids_noheader.txt
 
 
 Split fastqs by individual
 
-    $ nohup perl splitFastq_universal_regex.pl TEPE23_ids_noheader.txt parsed_TEPE23.clean.fastq &>/dev/null &
+    $ nohup perl splitFastq_universal_regex.pl CADE_FRVE_ids_noheader.txt cat_parsed_CADE_FRVE12.clean.fastq &>/dev/null &
 
 
 
