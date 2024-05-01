@@ -1,0 +1,61 @@
+﻿Index,Location,Code,Species,Variety,uncertainty,Tissue_Date,Latitude,Longitude,Elevation,n_samples,Voucher,DNA_Plate
+1,Bluewood,BW,Eriogonum compositum,,,6/1/22,46.2916,-117.9281,,12,Moscow ERCO12_22_01,1
+2,Joseph,JS,ERUM,,,6/1/22,45.0898,-116.8627,,12,No,1
+3,Joseph Overlook,JO,ERUM,,,6/1/22,45.8354,-117.2637,,10,Moscow ERUM_22_01,2
+4,Tiger Creek,TC,ERUM,,,6/1/22,45.9821,-118.0528,,12,Moscow ERUM_22_02,2
+5,Ukiah,UK,ERUM,,,6/1/22,45.0495,-118.9787,,12,Moscow ERUM_22_03,2
+6,Dutch John Creek half mi south,DJ,ERUM,,,6/25/22,41.698019,-117.50269,,12,inadequate,2
+7,Big Bend Campground,BB,ERUM,stragulum,"variety by association with historic annotated specimen, any voucher has not been keyed out",7/20/22,41.7669,-115.7005,,10,Yes,2
+8,JP Desert Cottonwood Creek,JP,ERUM,aureum,"variety by association with historic annotated specimen, any voucher has not been keyed out",7/20/22,42.0563,-115.8043,,10,Yes,1
+9,Tennessee Mt,TM,Eriogonum strictum,,certain,7/20/22,41.7946,-115.6701,,10,No,1
+10,Blacks Creek Summit,BC,ERUM,ellipticum,"variety by association with historic annotated specimen, any voucher has not been keyed out",7/21/22,43.4974,-115.9223,,10,Yes,2
+11,Elko Hills,EH,ERUM,dichrocephalum,"variety by association with historic annotated specimen, any voucher has not been keyed out",7/21/22,40.7444,-115.8229,,10,No,2
+12,Greys Peak,GP,ERUM,porteri,"variety by association with historic annotated specimen, any voucher has not been keyed out",7/21/22,41.0238,-115.105,,10,Yes,2
+13,Dorsey Creek,DC,ERUM,aureum,"variety by association with historic annotated specimen, any voucher has not been keyed out",7/27/22,41.5473,-116.0015,,10,Yes,2 and 7
+14,McAfee Peak,MP,ERUM,,,7/27/22,41.5382,-115.9669,,12,Yes,3
+15,Buckskin Loop,BL,ERUM,aureum,"variety by association with historic annotated specimen, any voucher has not been keyed out",8/4/22,41.778417,-117.54863,,12,na,3
+16,Camas Prairie,CP,ERUM,umbellatum,"variety by association with historic annotated specimen, any voucher has not been keyed out",8/8/22,43.1744,-115.0001,,10,inadequate,3
+17,Little Camas Res,CR,ERUM,,see notes,8/8/22,43.3313,-115.3998,,10,Yes,3
+18,Camas Creek Macon Flat,CC,ERUM,majus,see notes,8/9/22,43.3282,-114.579,,10,inadequate,3
+19,Magic Reservoir,MR,ERUM,stragulum,TYPE locality,8/9/22,43.3373,-114.4143,,10,inadequate,3
+20,Wells Summit,WS,ERUM,majus,"nearby herbarium specimen, not annotated, any voucher has not been keyed out",8/9/22,43.4837,-114.7603,,10,Yes,3
+21,Adams Gulch,AG,ERUM,,see notes,8/10/22,43.7094,-114.3958,,10,Yes,3
+22,Angel Creek,AC,ERUM,dichrocephalum,"nearby herbarium specimen, not annotated, any voucher has not been keyed out",8/17/22,41.0564,-115.0214,,10,No,1
+23,Bald Eagle Mt,BE,ERUM,majus,"nearby herbarium specimen, not annotated, any voucher has not been keyed out",8/17/22,41.252,-114.0158,,10,No,1
+24,Lower Penstemon CG Magic Mountain,LP,ERUM,,see notes,8/18/22,42.1973,-114.2865,,10,Yes,3
+25,Mt Harrison,MH,ERUM,dichrocephalum,"variety by association with historic annotated specimen, any voucher has not been keyed out",8/18/22,42.3095,-113.6585,,10,Yes,4
+26,Bend,BD,ERUM,modocense,"variety by association with historic annotated specimen, any voucher has not been keyed out",8/23/22,44.124,-121.1589,,10,No,4
+27,Mt Bachelor Cinder Cone,MB,ERUM,,,8/24/22,43.999,-121.6864,,10,No,4
+28,Mt Bachelor Cinder Cone unknown,MU,Eriogonum sp.,,sp unknown,8/24/22,43.999,-121.6864,,10,No,7
+32,Julietta,JU,ERUM,,,4/14/23,46.4748,-116.7693,,12,na,4
+33,Castlerocks,CA,ERUM,,,received2022,42.133378,-113.66521,,7,na,7
+34,Chicken Canyon,CH,ERUM,,,6/15/22,40.8593,-119.7726,,12,inadequate,7
+35,Hamilton Ranch,HR,ERUM,,not flowering,6/8/23,45.3311,-113.2436,7376,16,Moscow ERUM_23_01,1
+36,Stoddard,ST,ERUM,,not flowering,6/9/23,44.4099,-112.219,6296,19,Moscow ERUM_23_02,4
+37,Brownback Mtn,BM,Eriogonum sp.,,sp unknown,6/9/23,45.7025,-112.1099,5362,5,Moscow ERunk_23_01,7
+38,Whitehall,WH,ERUM,,,6/9/23,46.1326,-112.1116,5447,16,Moscow ERUM_23_03,4
+39,Tippipah Spring,TS,ERUM,vernum,TYPE locality,6/6/23,37.04041,-116.2233,,10,Yes,5
+40,Tippipah Point,TP,ERUM,vernum,"variety by association with historic annotated specimen, any voucher has not been keyed out",6/6/23,37.01009,-116.20719,,10,Yes,5
+41,Shoshone Mountain,SM,ERUM,,,6/7/23,36.937784,-116.215411,,10,inadequate,5
+42,Rainier Mesa,RM,ERUM,subaridum,"variety by association with historic annotated specimen, any voucher has not been keyed out",6/7/23,37.1876,-116.2093,,9,inadequate,4
+43,White Rock Spring,WR,ERUM,versicolor,"variety by association with historic annotated specimen, any voucher has not been keyed out",6/8/23,37.8956,-115.0188,,10,Yes,5
+44,Stone Cabin Valley,SC,ERUM,vernum,"variety by association with historic annotated specimen, any voucher has not been keyed out",6/8/23,38.1334,-116.7305,,10,Yes,1
+45,Hancock Summit,HS,ERUM,dichrocephalum,"nearby herbarium specimen, not annotated, any voucher has not been keyed out",6/8/23,37.4251,-115.3603,,10,Yes,5
+46,White River Highway 6,WV,ERUM,juniporinum,"variety by association with historic annotated specimen, any voucher has not been keyed out",6/9/23,38.9122,-115.16657,,10,No,5
+48,Wooten,WO,Eriogonum sp.,,E. niveum possibly,7/19/23,46.3503,-117.6815,2093,12,Yes,4
+49,Scroggen,SG,ERHE2,,"certain, mid-stem whorl present",7/19/23,46.3216,-117.5769,4200,15,Moscow ERHE2_23_01,5
+50,Umatilla west entrance,UW,ERUM,,,7/19/23,46.2854,-117.5587,4660,11,Moscow ERUM_23_04,7
+51,Sunflower flat,SF,ERUM,,,7/19/23,46.2093,-117.6231,5446,19,Moscow ERUM_23_05,5
+52,Asotin CCC,AS,Eriogonum sp.,,E. flavum possibly,7/19/23,46.1216,-117.4658,6115,16,Yes,7
+53,Wenatchee,WE,ERHE2,,,7/19/23,46.1224,-117.3823,5449,15,Moscow ERHE2_23_02,7
+54,Sheep Mountain,SH,ERUM,,,7/30/23,44.3716,-113.2739,,10,na,6
+55,Truck Stuck in mud,TR,ERUM,,,6/30/23,40.728857,-119.968731,,10,na,6
+56,Bob Scott Campground,BS,ERUM,,,8/9/23,39.457459,-116.994293,,10,na,6
+57,Murry Summit,MS,ERUM,,,8/8/23,39.21835,-114.965688,,10,na,6
+58,"Hice Spring, Knoll Creek",HK,ERUM,,,8/7/23,41.6070871,-114.6606474,,10,na,6
+59,Kalamazoo Canyon,KA,ERUM,,,8/8/23,39.552933,-114.639788,,10,na,6
+60,Knoll Creek,KC,Eriogonum brevicaule,,,8/7/23,41.632343,-114.749573,,10,na,6
+61,Twin Spring Hills,TW,ERUM,,,8/9/23,39.476664,-116.405182,,10,na,6
+62,Sacramento Pass,SP,ERUM,juniporinum,,8/8/23,39.1456,-114.3339,,12,na,6 and 7
+63,"Mill Creek, Lemhi Mountains",MY,ERUM,,yellow,7/30/23,44.3678,-113.362,,10,na,6
+64,"Mill Creek, Lemhi Mountains",MC,ERUM,,cream,7/30/23,44.366,-113.3636,,10,na,7
