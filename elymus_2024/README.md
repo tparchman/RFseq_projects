@@ -1,26 +1,22 @@
 
-## Organization and Workflow for desert bighorn (5/24) 
-Organizational notes and code for one sequencing sets:
-- Plates shipped from Epps lab, Rachel Crowhurst shipped in February
+## Organization and Workflow for Elymus elymoides seed genetics (6/24) 
+Organizational notes and code for one library:
+- DNA is from seeds (BFI, sole source, 4 pops), UNR common garden, and from massatti.
 
  ![GELIMAGE](md_images/plate_setup.jpg)
 
 ## Sample organization
-- Full information on DNAs for each individual sampled across natural distribution can be found in `GitHub/RFseq_projects/OVCA/Bighorn_samples_ddRAD_pllate_map_16Feb24.xlsx`. This file also has the updated plate maps with specified IDs.
-
-- barcode key file corresponds with CADE_FRVELib:
-
+- Full information on DNAs for each individual sampled across natural distribution can be found in `GitHub/RFseq_projects/elymus/****.xlsx`. This file also has the updated plate maps with specified IDs.
 
 ## Notes on library preparation
 
 
-### R/L and PCR for plates 1-4. 
+### R/L and PCR for plates 1-6. 
 
-- Master mix in `CADE_FRVE_RFseq_mastermixcockatils.xlsx`.
-- Restriction done on 1/2/24
-- Ligation complete on 1/3/24
-- PCR done on: 1/5/24
-
+- Master mix in `ELYMUS_RFseq_mastermixcockatils.xlsx`.
+- Restriction done on 6/10/24
+- Ligation complete on 6/11/24
+- PCR done on: 6/12/24
 
 
 10 ul of each PCR product into final library. Tubes in door of freezer labelled **CADE_FRVE_LIB**.
