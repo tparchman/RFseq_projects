@@ -1,10 +1,6 @@
 
-## Organization and Workflow for GBS for Tepe Solanum and Valentina's house wren samples 
-Organizational notes and code for two sequencing sets:
-- 4 *Castanea dentata* (CADE, American chestnut) plates from Jill Hamilton
-- 1 plate of *Fraxinus velutina* (FRVE below), collected by Trevor Faske, extracted at AG BIO.
-- ~50 samples of brook trout from Jason Kenagy at PSU
-- see photos of sample organization for HOWR
+## Casey Atkins neotoma plates, 2024
+
 
  ![GELIMAGE](md_images/plate_setup.jpg)
 
