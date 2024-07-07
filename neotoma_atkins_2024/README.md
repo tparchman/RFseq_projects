@@ -1,35 +1,25 @@
 
-## Casey Atkins neotoma plates, 2024
+## Casey Atkins neotoma 4 plates, 2024
 
-
- ![GELIMAGE](md_images/plate_setup.jpg)
 
 ## Sample organization
-- Full information on DNAs for each individual sampled across natural distribution can be found in `GitHub/RFseq_projects/chestnut_velutina_brooktrout_PSU/`. This file also has the updated plate maps with specified IDs.
-
-- barcode key file corresponds with CADE_FRVELib:
+- see `~/Documents/GitHub/RFseq_projects/neotoma_atkins_2024`
+- Plate maps: `Neo24-PlateMaps.xlsx`
+- barcode key file: `NEO24_barcode_key.csv`
 
 
 ## Notes on library preparation
 
-
 ### R/L and PCR for plates 1-4. 
 
-- Master mix in `CADE_FRVE_RFseq_mastermixcockatils.xlsx`.
-- Restriction done on 1/2/24
-- Ligation complete on 1/3/24
-- PCR done on: 1/5/24
-
-6/29/23: gel for CADE_FRVE_LIB1
- 
-![GELIMAGE](md_images/TEPE23_LIB1_GEL.jpg)
-
-10 ul of each PCR product into final library. Tubes in door of freezer labelled **TEPE23_LIB**.
-
+- Master mix in `NEO_2024_RFseq_mastermixcockatils.xlsx`.
+- Restriction done on 4/2/24
+- Ligation complete on 4/3/24
+- PCR done on: 4/5/24
 
 ## Data analysis: contaminant cleaning, barcode parsing, data storage, directory organization, and initial analyses.
 
-We generated one lane of S1 chemistry NovaSeq data at UTGSAF in August of 2023. 
+We generated two lanes of S1 chemistry NovaSeq data at UTGSAF in May of 2023. 
 
 
 ## This file contains code and notes for
@@ -44,71 +34,77 @@ We generated one lane of S1 chemistry NovaSeq data at UTGSAF in August of 2023.
 
 ## 1. Cleaning contaminants
 
-Being executed on ponderosa using tapioca pipeline. Commands in two bash scripts (cleaning_bash_TEPE23.sh), executed as below (9/11/23).
+Being executed on ponderosa using tapioca pipeline. Commands in bash script (cleaning_bash_NEO24.sh), executed as below.
 
 Decompress fastq file:
 
-    $ gunzip TEPE23_S133_L002_R1_001.fastq.gz
+    $ gunzip NEO24lib1_S1_L001_R1_001.fastq.gz
+    $ gunzip NEO24lib1_S1_L002_R1_001.fastq.gz
 
 Number of reads **before** cleaning:
 
-    $ nohup grep -c "^@" TEPE23_S133_L002_R1_001.fastq > TEPE23_number_of_rawreads.txt &
-    ## raw reads: 1,020,080,241
+    $ nohup grep -c "^@" NEO24lib1_S1_L001_R1_001.fastq > NEO241_number_of_rawreads.txt &
+    ## raw reads: 
+
+    $ nohup grep -c "^@" NEO24lib1_S1_L002_R1_001.fastq > NEO242_number_of_rawreads.txt &
+    ## raw reads:
 
 To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and run bash scripts.
 
     $ module load fqutils/0.4.1
     $ module load bowtie2/2.2.5
     
-    $ bash cleaning_bash_TEPE23.sh &
+    $ bash cleaning_bash_NEO24.sh &
+
 
 
 After .clean.fastq has been produced, rm raw data:
 
-    $ rm -rf TEPE23_S133_L002_R1_001.fastq &
+    $ rm -rf NEO24lib1_S1_L001_R1_001.fastq &
+    $ rm -rf NEO24lib1_S1_L002_R1_001.fastq &
 
 
+Raw data will stay stored in: /archive/parchman_lab/rawdata_to_backup/NEO24/
 
-Raw data will stay stored in: /archive/parchman_lab/rawdata_to_backup/FRLA/
+Before barcode parsing, cat two clean fastq files into one:
+
+    $ cat NEO_1.clean.fastq NEO_2.clean.fastq > NEO24_all.clean.fastq &
+
+# DONE TO HERE
 
 Number of reads **after** cleaning:
 
-
-    $ nohup grep -c "^@" TEPE23.clean.fastq > TEPE23_clean_reads.txt &
-    # number of clean reads : 627,879,872
+    $ nohup grep -c "^@" NEO24_all.clean.fastq > NEO24_all_clean_reads.txt &
+    # number of clean reads : 
 
 ####################################################################################
 ## 2. Barcode parsing:
 ####################################################################################
 
-Be sure to deactivate conda environment before running the below steps. Barcode keyfiles are `/working/parchman/TEPE23/FRLA1_barcode_key.csv`
+Be sure to deactivate conda environment before running the below steps. Barcode keyfile is `NEO24_barcode_key.csv`
 `
 Parsing FRLA1 library:
 
-    $ nohup perl parse_barcodes768.pl TEPE23_barcodekey.csv TEPE23.clean.fastq A00 &>/dev/null &
+    $ nohup perl parse_barcodes768.pl NEO24_barcode_key.csv NEO24_all.clean.fastq A00 &>/dev/null &
 
 
 
-# DONE TO HERE
 `NOTE`: the A00 object is the code that identifies the sequencer (first three characters after the @ in the fastq identifier).
 
-    $ less parsereport_TEPE23.clean.fastq
+    $ less parsereport_NEO24_all.clean.fastq 
 
-    Good mids count: 586412516
-    Bad mids count: 41467189
-    Number of seqs with potential MSE adapter in seq: 275328
-    Seqs that were too short after removing MSE and beyond: 167
+    Good mids count: 
 
 
 ####################################################################################
 ## 3. splitting fastqs
 ####################################################################################
 
-For FRLA, doing this in `/working/parchman/TEPE23/splitfastqs_TEPE23/*`
+For FRLA, doing this in `/working/parchman/NEO24_fastqs/splitfastqs`
 
 Make ids file
 
-    $ cut -f 3 -d "," TEPE23_barcodekey.csv | grep "_" > TEPE23_ids_noheader.txt
+    $ cut -f 3 -d "," NEO24_barcode_key.csv | grep "_" > NEO24_ids_noheader.txt
 
 
 Split fastqs by individual
