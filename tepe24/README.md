@@ -1,5 +1,5 @@
 
-## Tepe, piper and solanum, 4 plates, 2024
+## Casey Atkins neotoma 4 plates, 2024
 
 
 ## Sample organization
