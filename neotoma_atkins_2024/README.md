@@ -1,5 +1,5 @@
 
-## Tepe, piper and solanum, 4 plates, 2024
+## Casey Atkins neotoma 4 plates, 2024
 
 
 ## Sample organization
@@ -125,7 +125,10 @@ Zip the parsed*fastq files
 ### syncing fastq files to Adkins directory on pronghorn:
 
 
-    $ rsync -av *fastq.gz tparchman@pronghorn.rc.unr.edu:
+    $ rsync -av *fastq.gz tparchman@pronghorn.rc.unr.edu:/data/gpfs/assoc/matocqlab/Casey/CR_neotoma/
+
+
+
 Fastqs by species are located on ponderosa in:
 
 FRLA1:

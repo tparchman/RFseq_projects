@@ -1,18 +1,18 @@
 
-## Casey Atkins neotoma 4 plates, 2024
+## Tepe, piper and solanum, 4 plates, 2024
 
 
 ## Sample organization
-- see `~/Documents/GitHub/RFseq_projects/neotoma_atkins_2024`
-- Plate maps: `Neo24-PlateMaps.xlsx`
-- barcode key file: `NEO24_barcode_key.csv`
+- see `~/Documents/GitHub/RFseq_projects/tepe24`
+- Plate maps: ``
+- barcode key file: `TEPE24_barcode_key.csv`
 
 
 ## Notes on library preparation
 
 ### R/L and PCR for plates 1-4. 
 
-- Master mix in `NEO_2024_RFseq_mastermixcockatils.xlsx`.
+- Master mix in `TEPE_2024_RFseq_mastermixcockatils.xlsx`.
 - Restriction done on 4/2/24
 - Ligation complete on 4/3/24
 - PCR done on: 4/5/24
