@@ -79,20 +79,10 @@ Parsing OVCA library:
 
     $ nohup perl parse_barcodes768.pl POMA_barcode_key.csv POMA.clean.fastq A00 &>/dev/null &
 
+looking at report:
 
-    $ less parsereport_CADE_FRVE1.clean.fastq
+    $ less parsereport_POMA.clean.fastq
 
-    Good mids count: 644098458
-    Bad mids count: 25913131
-    Number of seqs with potential MSE adapter in seq: 197210
-    Seqs that were too short after removing MSE and beyond: 190
-
-    $ less parsereport_OVCA.clean.fastq
-
-    Good mids count: 
-    Bad mids count: 
-    Number of seqs with potential MSE adapter in seq: 
-    Seqs that were too short after removing MSE and beyond: 
 
 ####################################################################################
 ## 3. splitting fastqs
