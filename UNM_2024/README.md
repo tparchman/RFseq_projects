@@ -54,7 +54,7 @@ Decompress fastq files:
 Number of reads **before** cleaning:
 
     $ nohup grep -c "^@" OC-2024_S1_L004_R1_001.fastq > OVCA_number_of_rawreads.txt &
-    ## raw reads: 2,895,918,782
+    ## raw reads: 
 
 To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and run bash scripts.
 
@@ -64,50 +64,71 @@ To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and
     $ bash cleaning_bash_OVCA.sh &
 
 
-After .clean.fastq has been produced, moved OC-2024_S1_L004_R1_001.fastq to /backups/rawdata_to_backup/OVCA
+After .clean.fastq has been produced, rm raw data:
+
+    $ rm -rf CADE-FRVE_S1_L001_R1_001.fastq &
+    $ rm -rf CADE-FRVE_S1_L002_R1_001.fastq &
 
 
-Raw data will stay stored in: /backups/rawdata_to_backup/OVCA
+
+Raw data will stay stored in: /archive/parchman_lab/rawdata_to_backup/FRLA/
 
 Number of reads **after** cleaning:
 
-    $ nohup grep -c "^@" OVCA.clean.fastq > OVCA_clean_reads.txt &
+    $ nohup grep -c "^@" CADE_FRVE1.clean.fastq > CADE_FRVE1_clean_reads.txt &
     # number of clean reads : 
 
+    $ nohup grep -c "^@" CADE_FRVE2.clean.fastq > CADE_FRVE2_clean_reads.txt &
+    # number of clean reads : 
 
 ####################################################################################
 ## 2. Barcode parsing:
 ####################################################################################
 
-Be sure to deactivate conda environment before running the below steps. Barcode keyfile is `/working/parchman/OVCA/OVCA_barcode_key.csv`
+Be sure to deactivate conda environment before running the below steps. Barcode keyfiles are `/working/parchman/TEPE23/FRLA1_barcode_key.csv`
 `
-Parsing OVCA library:
+Parsing CADE_FRVE1 library:
 
-    $ nohup perl parse_barcodes768.pl OVCA_barcode_key.csv OVCA.clean.fastq A00 &>/dev/null &
+    $ nohup perl parse_barcodes768.pl CADE_FRVE_barcode_info_2018.csv CADE_FRVE1.clean.fastq A00 &>/dev/null &
 
-    $ less parsereport_OVCA.clean.fastq
+Parsing CADE_FRVE2 library:
 
-    Good mids count: 1946083275
-    Bad mids count: 77139598
-    Number of seqs with potential MSE adapter in seq: 349029
-    Seqs that were too short after removing MSE and beyond: 404
+    $ nohup perl parse_barcodes768.pl CADE_FRVE_barcode_info_2018.csv CADE_FRVE2.clean.fastq A00 &>/dev/null &
 
+`NOTE`: the A00 object is the code that identifies the sequencer (first three characters after the @ in the fastq identifier).
+
+    $ less parsereport_CADE_FRVE1.clean.fastq
+
+    Good mids count: 644098458
+    Bad mids count: 25913131
+    Number of seqs with potential MSE adapter in seq: 197210
+    Seqs that were too short after removing MSE and beyond: 190
+
+    $ less parsereport_CADE_FRVE2.clean.fastq
+
+    Good mids count: 668825901
+    Bad mids count: 47552067
+    Number of seqs with potential MSE adapter in seq: 648922
+    Seqs that were too short after removing MSE and beyond: 4257
 
 ####################################################################################
 ## 3. splitting fastqs
 ####################################################################################
 
-For OVCA, doing this in `/working/parchman/OVCA/splitfastqs_OVCA/` 
+For FRLA, doing this in `/working/parchman/CADE_FRVE/splitfastqs_CADE_FRVE/` 
 
+Concatenate the two parsed_*fastq files:
+
+    $ nohup cat parsed_CADE_FRVE1.clean.fastq parsed_CADE_FRVE2.clean.fastq > cat_parsed_CADE_FRVE12.clean.fastq &>/dev/null &
 
 Make ids file
 
-    $ cut -f 3 -d "," OVCA_barcode_key.csv | grep "[A-Z]" > OVCA_ids_noheader.txt
+    $ cut -f 3 -d "," CADE_FRVE_barcode_info_2018.csv | grep "[A-Z]" > CADE_FRVE_ids_noheader.txt
 
 
 Split fastqs by individual
 
-    $ nohup perl splitFastq_universal_regex.pl OVCA_ids_noheader.txt parsed_OVCA.clean.fastq &>/dev/null &
+    $ nohup perl splitFastq_universal_regex.pl CADE_FRVE_ids_noheader.txt cat_CADE_FRVE_1and2.fastq &>/dev/null &
 
 
 

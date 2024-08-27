@@ -1,14 +1,12 @@
 
-## Organization and Workflow for desert bighorn (5/24) 
+## Organization and Workflow for POMA (8/24) 
 Organizational notes and code for one sequencing sets:
-- Plates shipped from Epps lab, Rachel Crowhurst shipped in February
-
- ![GELIMAGE](md_images/plate_setup.jpg)
+- 1 plus plates in the first freezer door have DNAs in order as loaded into 96 well plates. See also `plate_map.csv` 
 
 ## Sample organization
-- Full information on DNAs for each individual sampled across natural distribution can be found in `GitHub/RFseq_projects/OVCA/Bighorn_samples_ddRAD_pllate_map_16Feb24.xlsx`. This file also has the updated plate maps with specified IDs.
+- Full information on DNAs for each individual sampled across natural distribution can be found in `GitHub/RFseq_projects/POMA/plate_map.csv`. This file also has the updated plate maps with specified IDs.
 
-- barcode key file corresponds with CADE_FRVELib:
+- barcode key file corresponds with POMA:
 
 
 ## Notes on library preparation
@@ -16,14 +14,14 @@ Organizational notes and code for one sequencing sets:
 
 ### R/L and PCR for plates 1-4. 
 
-- Master mix in `CADE_FRVE_RFseq_mastermixcockatils.xlsx`.
-- Restriction done on 1/2/24
-- Ligation complete on 1/3/24
-- PCR done on: 1/5/24
+- Master mix in `PM_skipper_RFseq_mastermixcockatils.xlsx`.
+- Restriction done on 5/2/24
+- Ligation complete on 5/3/24
+- PCR done on: 5/5/24
 
 
 
-10 ul of each PCR product into final library. Tubes in door of freezer labelled **CADE_FRVE_LIB**.
+10 ul of each PCR product into final library. Tubes in door of freezer labelled **POMA**.
 
 
 ## Data analysis: contaminant cleaning, barcode parsing, data storage, directory organization, and initial analyses.
@@ -45,29 +43,25 @@ We generated two lanes of S1 chemistry NovaSeq data at UTGSAF in March of 2024.
 
 Being executed on ponderosa using tapioca pipeline. Commands in two bash scripts (cleaning_bash_CADE_FRVE.sh), executed as below (4/12/24). This work being carried out at:
 
-    /working/parchman/OVCA/
+    /working/parchman/POMA/
 
 Decompress fastq files:
 
-    $ gunzip OC-2024_S1_L004_R1_001.fastq.gz
-
+    $ nohup gunzip POMA_S110_L002_R1_001.fastq.gz &
 Number of reads **before** cleaning:
 
-    $ nohup grep -c "^@" OC-2024_S1_L004_R1_001.fastq > OVCA_number_of_rawreads.txt &
-    ## raw reads: 2,895,918,782
+    $ nohup grep -c "^@" POMA_S110_L002_R1_001.fastq > POMA.txt &
+    ## raw reads: 
 
 To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and run bash scripts.
 
     $ module load fqutils/0.4.1
     $ module load bowtie2/2.2.5
     
-    $ bash cleaning_bash_OVCA.sh &
+    $ bash cleaning_bash_POMA.sh &
 
 
-After .clean.fastq has been produced, moved OC-2024_S1_L004_R1_001.fastq to /backups/rawdata_to_backup/OVCA
-
-
-Raw data will stay stored in: /backups/rawdata_to_backup/OVCA
+Raw data (POMA_S110_L002_R1_001.fastq) will stay stored in: /backups/rawdata_to_backup/POMA
 
 Number of reads **after** cleaning:
 
@@ -85,13 +79,20 @@ Parsing OVCA library:
 
     $ nohup perl parse_barcodes768.pl OVCA_barcode_key.csv OVCA.clean.fastq A00 &>/dev/null &
 
+
+    $ less parsereport_CADE_FRVE1.clean.fastq
+
+    Good mids count: 644098458
+    Bad mids count: 25913131
+    Number of seqs with potential MSE adapter in seq: 197210
+    Seqs that were too short after removing MSE and beyond: 190
+
     $ less parsereport_OVCA.clean.fastq
 
-    Good mids count: 1946083275
-    Bad mids count: 77139598
-    Number of seqs with potential MSE adapter in seq: 349029
-    Seqs that were too short after removing MSE and beyond: 404
-
+    Good mids count: 
+    Bad mids count: 
+    Number of seqs with potential MSE adapter in seq: 
+    Seqs that were too short after removing MSE and beyond: 
 
 ####################################################################################
 ## 3. splitting fastqs
@@ -99,15 +100,18 @@ Parsing OVCA library:
 
 For OVCA, doing this in `/working/parchman/OVCA/splitfastqs_OVCA/` 
 
+Concatenate the two parsed_*fastq files:
+
+    $ nohup cat parsed_CADE_FRVE1.clean.fastq parsed_CADE_FRVE2.clean.fastq > cat_parsed_CADE_FRVE12.clean.fastq &>/dev/null &
 
 Make ids file
 
-    $ cut -f 3 -d "," OVCA_barcode_key.csv | grep "[A-Z]" > OVCA_ids_noheader.txt
+    $ cut -f 3 -d "," CADE_FRVE_barcode_info_2018.csv | grep "[A-Z]" > CADE_FRVE_ids_noheader.txt
 
 
 Split fastqs by individual
 
-    $ nohup perl splitFastq_universal_regex.pl OVCA_ids_noheader.txt parsed_OVCA.clean.fastq &>/dev/null &
+    $ nohup perl splitFastq_universal_regex.pl CADE_FRVE_ids_noheader.txt cat_CADE_FRVE_1and2.fastq &>/dev/null &
 
 
 
