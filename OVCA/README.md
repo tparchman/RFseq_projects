@@ -102,12 +102,12 @@ For OVCA, doing this in `/working/parchman/OVCA/splitfastqs_OVCA/`
 
 Make ids file
 
-    $ cut -f 3 -d "," OVCA_barcode_key.csv | grep "[A-Z]" > OVCA_ids_noheader.txt
+    $ cut -f 3 -d "," OVCA_barcode_key.csv > OVCA_ids_noheader.txt
 
 
 Split fastqs by individual
 
-    $ nohup perl splitFastq_universal_regex.pl OVCA_ids_noheader.txt parsed_OVCA.clean.fastq &>/dev/null &
+    $ nohup perl dash_alt_splitFastq_universal_regex.pl OVCA_ids_noheader.txt parsed_OVCA.clean.fastq &>/dev/null &
 
 
 

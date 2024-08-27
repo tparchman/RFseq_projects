@@ -6,7 +6,7 @@ Organizational notes and code for one sequencing sets:
 ## Sample organization
 - Full information on DNAs for each individual sampled across natural distribution can be found in `GitHub/RFseq_projects/POMA/plate_map.csv`. This file also has the updated plate maps with specified IDs.
 
-- barcode key file corresponds with POMA:
+- barcode key file corresponds with POMA:`POMA_barcode_key.csv`
 
 
 ## Notes on library preparation
@@ -26,7 +26,7 @@ Organizational notes and code for one sequencing sets:
 
 ## Data analysis: contaminant cleaning, barcode parsing, data storage, directory organization, and initial analyses.
 
-We generated two lanes of S1 chemistry NovaSeq data at UTGSAF in March of 2024. 
+We generated one lane of S1 chemistry NovaSeq data at UTGSAF in July of 2024. 
 
 
 ## This file contains code and notes for
@@ -61,7 +61,7 @@ To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and
     $ bash cleaning_bash_POMA.sh &
 
 
-Raw data (POMA_S110_L002_R1_001.fastq) will stay stored in: /backups/rawdata_to_backup/POMA
+Raw data (POMA_S110_L002_R1_001.fastq) will stay stored in: /backups/rawdata_to_backup/POMA/
 
 Number of reads **after** cleaning:
 
@@ -77,7 +77,7 @@ Be sure to deactivate conda environment before running the below steps. Barcode 
 `
 Parsing OVCA library:
 
-    $ nohup perl parse_barcodes768.pl OVCA_barcode_key.csv OVCA.clean.fastq A00 &>/dev/null &
+    $ nohup perl parse_barcodes768.pl POMA_barcode_key.csv POMA.clean.fastq A00 &>/dev/null &
 
 
     $ less parsereport_CADE_FRVE1.clean.fastq
