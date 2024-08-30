@@ -73,35 +73,33 @@ Number of reads **after** cleaning:
 ## 2. Barcode parsing:
 ####################################################################################
 
-Be sure to deactivate conda environment before running the below steps. Barcode keyfile is `/working/parchman/OVCA/OVCA_barcode_key.csv`
+Be sure to deactivate conda environment before running the below steps. Barcode keyfile is `/working/parchman/POMA/POMA_barcode_key.csv`
 `
-Parsing OVCA library:
+Parsing POMA library:
 
     $ nohup perl parse_barcodes768.pl POMA_barcode_key.csv POMA.clean.fastq A00 &>/dev/null &
 
 looking at report:
 
     $ less parsereport_POMA.clean.fastq
-
+    Good mids count: 594526790
+    Bad mids count: 50658963
+    Number of seqs with potential MSE adapter in seq: 227974
+    Seqs that were too short after removing MSE and beyond: 125
 
 ####################################################################################
 ## 3. splitting fastqs
 ####################################################################################
 
-For OVCA, doing this in `/working/parchman/OVCA/splitfastqs_OVCA/` 
-
-Concatenate the two parsed_*fastq files:
-
-    $ nohup cat parsed_CADE_FRVE1.clean.fastq parsed_CADE_FRVE2.clean.fastq > cat_parsed_CADE_FRVE12.clean.fastq &>/dev/null &
+Doing this in `/working/parchman/POMA/splitfastqs_POMA/` 
 
 Make ids file
 
-    $ cut -f 3 -d "," CADE_FRVE_barcode_info_2018.csv | grep "[A-Z]" > CADE_FRVE_ids_noheader.txt
-
+    $ cut -f 3 -d "," POMA_barcode_key.csv | grep "[A-Z]" > POMA_ids_noheader.txt
 
 Split fastqs by individual
 
-    $ nohup perl splitFastq_universal_regex.pl CADE_FRVE_ids_noheader.txt cat_CADE_FRVE_1and2.fastq &>/dev/null &
+    $ nohup perl splitFastq_universal_regex.pl POMA_ids_noheader.txt parsed_POMA.clean.fastq &>/dev/null &
 
 
 
