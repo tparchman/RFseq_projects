@@ -1,17 +1,12 @@
 
-## Organization and Workflow for GBS of American Chestnut, Fraxinus Velutina, and some Brook trout 
+## Organization and Workflow for GBS of Eriogunum umbellatum 
 Organizational notes and code for two sequencing sets:
-- 4 *Castanea dentata* (CADE, American chestnut) plates from Jill Hamilton
-- 1 plate of *Fraxinus velutina* (FRVE below), collected by Trevor Faske, extracted at AG BIO.
-- ~50 samples of brook trout from Jason Kenagy at PSU
-- see photos of sample organization for HOWR
-
- ![GELIMAGE](md_images/plate_setup.jpg)
+8 plates, from Ag Bio
 
 ## Sample organization
-- Full information on DNAs for each individual sampled across natural distribution can be found in `GitHub/RFseq_projects/chestnut_velutina_brooktrout_PSU/`. This file also has the updated plate maps with specified IDs.
+- Full information on DNAs for each individual sampled across natural distribution can be found in `GitHub/RFseq_projects/ERUM/barcode_files`. 
 
-- barcode key file corresponds with CADE_FRVELib:
+- barcode key file: `ERUM_barcode_key.csv`
 
 
 ## Notes on library preparation
@@ -19,19 +14,17 @@ Organizational notes and code for two sequencing sets:
 
 ### R/L and PCR for plates 1-4. 
 
-- Master mix in `CADE_FRVE_RFseq_mastermixcockatils.xlsx`.
-- Restriction done on 1/2/24
-- Ligation complete on 1/3/24
-- PCR done on: 1/5/24
+- Master mix in `ERUM_RFseq_mastermixcockatils.xlsx`.
 
 
 
-10 ul of each PCR product into final library. Tubes in door of freezer labelled **CADE_FRVE_LIB**.
+
+10 ul of each PCR product into final library. Tubes in door of freezer labelled **ERUM24_LIB**.
 
 
 ## Data analysis: contaminant cleaning, barcode parsing, data storage, directory organization, and initial analyses.
 
-We generated two lanes of S1 chemistry NovaSeq data at UTGSAF in March of 2024. 
+We generated two lanes of S1 chemistry NovaSeq data at UTGSAF in June of 2024. 
 
 
 ## This file contains code and notes for
@@ -48,26 +41,26 @@ We generated two lanes of S1 chemistry NovaSeq data at UTGSAF in March of 2024.
 
 Being executed on ponderosa using tapioca pipeline. Commands in two bash scripts (cleaning_bash_CADE_FRVE.sh), executed as below (4/12/24). This work being carried out at:
 
-    /working/parchman/CADE_FRVE/
+    /working/parchman/ERUM/
 
 Decompress fastq files:
 
-    $ gunzip CADE-FRVE_S1_L001_R1_001.fastq.gz
-    $ gunzip CADE-FRVE_S1_L002_R1_001.fastq.gz
+    $ gunzip ERMU24lib_S1_L001_R1_001.fastq.gz
+    $ ERMU24lib_S1_L002_R1_001.fastq.gz
 
 Number of reads **before** cleaning:
 
-    $ nohup grep -c "^@" CADE-FRVE_S1_L001_R1_001.fastq > L001_number_of_rawreads.txt &
+    $ nohup grep -c "^@" ERMU24lib_S1_L001_R1_001.fastq > L001_number_of_rawreads.txt &
     ## raw reads: 
 
-    $ nohup grep -c "^@" CADE-FRVE_S1_L002_R1_001.fastq > L002_number_of_rawreads.txt &
+    $ nohup grep -c "^@" ERMU24lib_S1_L002_R1_001.fastq > L002_number_of_rawreads.txt &
     ## raw reads: 
 To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and run bash scripts.
 
     $ module load fqutils/0.4.1
     $ module load bowtie2/2.2.5
     
-    $ bash cleaning_bash_CADE_FRVE.sh &
+    $ nohup bash cleaning_bash_ERUM.sh &
 
 
 After .clean.fastq has been produced, rm raw data:
