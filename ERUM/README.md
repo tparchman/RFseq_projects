@@ -63,14 +63,7 @@ To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and
     $ nohup bash cleaning_bash_ERUM.sh &
 
 
-After .clean.fastq has been produced, rm raw data:
-
-    $ rm -rf CADE-FRVE_S1_L001_R1_001.fastq &
-    $ rm -rf CADE-FRVE_S1_L002_R1_001.fastq &
-
-
-
-Raw data will stay stored in: /archive/parchman_lab/rawdata_to_backup/FRLA/
+Raw data will stay stored in: /archive/parchman_lab/rawdata_to_backup/ERUM/
 
 Number of reads **after** cleaning:
 
