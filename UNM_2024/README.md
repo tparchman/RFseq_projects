@@ -1,34 +1,18 @@
+# UNM GBS data processing
 
-## Organization and Workflow for desert bighorn (5/24) 
-Organizational notes and code for one sequencing sets:
-- Plates shipped from Epps lab, Rachel Crowhurst shipped in February
-
- ![GELIMAGE](md_images/plate_setup.jpg)
-
-## Sample organization
-- Full information on DNAs for each individual sampled across natural distribution can be found in `GitHub/RFseq_projects/OVCA/Bighorn_samples_ddRAD_pllate_map_16Feb24.xlsx`. This file also has the updated plate maps with specified IDs.
-
-- barcode key file corresponds with CADE_FRVELib:
+Library prep started on 12/14, 3.25 plates total.
 
 
-## Notes on library preparation
+Sample orientation and sample ID information illustrated in `UNM_plate_maps_working.xlsx`.
 
 
-### R/L and PCR for plates 1-4. 
+**CRITICAL NOTE: mistake made in barcode pipetting on plate 2. Row E of DNA got barcode from row D, so corrected by putting barcode from E with row D of DNA. To fix, switch sample IDs in the plate maps/barcode keys.
 
-- Master mix in `CADE_FRVE_RFseq_mastermixcockatils.xlsx`.
-- Restriction done on 1/2/24
-- Ligation complete on 1/3/24
-- PCR done on: 1/5/24
+## Notes on cleaning NovaSeq flow cell from 12/22, barcode parsing, splitting fastqs, directory organization, and initial analyses.
 
 
+We generated one lanes of S2 chemistry NovaSeq data at UTGSAF in December of 2022.
 
-10 ul of each PCR product into final library. Tubes in door of freezer labelled **CADE_FRVE_LIB**.
-
-
-## Data analysis: contaminant cleaning, barcode parsing, data storage, directory organization, and initial analyses.
-
-We generated two lanes of S1 chemistry NovaSeq data at UTGSAF in March of 2024. 
 
 
 ## This file contains code and notes for
@@ -43,109 +27,110 @@ We generated two lanes of S1 chemistry NovaSeq data at UTGSAF in March of 2024.
 
 ## 1. Cleaning contaminants
 
-Being executed on ponderosa using tapioca pipeline. Commands in two bash scripts (cleaning_bash_CADE_FRVE.sh), executed as below (4/12/24). This work being carried out at:
+Being executed on ponderosa using tapioca pipeline. Commands in bash script (cleaning_bash_UNM.sh), executed as below (2/10/23). This was for one S2 NovaSeq lanes generated in December 2022.
 
-    /working/parchman/OVCA/
 
-Decompress fastq files:
 
-    $ gunzip OC-2024_S1_L004_R1_001.fastq.gz
+Contam cleaning being executed on ponderosa using tapioca pipeline. Commands in bash script (cleaning_bash_RALU.sh), executed as below (12/16/22). This was for one S1 NovaSeq lanes generated in December 2022. Contaminant cleaning and barcode parsing are being done in:
+
+    /working/parchman/UNM_ERNA/
+
+
+Decompress fastq file:
+
+    $ gunzip *fastq
+
 
 Number of reads **before** cleaning:
 
-    $ nohup grep -c "^@" OC-2024_S1_L004_R1_001.fastq > OVCA_number_of_rawreads.txt &
-    ## raw reads: 
+    $ grep -c "^@" UNM_S2_L002_R1_001.fastq > UNM_ERNA_number_of_rawreads.txt
 
-To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and run bash scripts.
+The S2 lane produced 2,397,857,739 reads.
+
+
+
+Contaminant cleaning using tapioca steps below. On ponderosa or contorta, be sure to first deactivate the conda environment. `cleaning_bash_UNM.sh` bash script uses `bowtie` and several contaminant data bases to match reads with suspected contaminant presence and writes a clean.fastq file with those sequences removed.
+
+    $ conda deactivate
 
     $ module load fqutils/0.4.1
     $ module load bowtie2/2.2.5
     
-    $ bash cleaning_bash_OVCA.sh &
+    $ nohup bash cleaning_bash_UNM.sh &>/dev/null &
 
 
-After .clean.fastq has been produced, rm raw data:
+After .clean.fastq has been produced, delete copy of raw data:
 
-    $ rm -rf CADE-FRVE_S1_L001_R1_001.fastq &
-    $ rm -rf CADE-FRVE_S1_L002_R1_001.fastq &
+    $ rm -rf RALU_S1_L001_R1_001.fastq
 
+Raw data will stay stored in: /archive/parchman_lab/rawdata_to_backup/RALU_GSAF/
 
+Number of reads **before** cleaning:
 
-Raw data will stay stored in: /archive/parchman_lab/rawdata_to_backup/FRLA/
+    $ grep -c "^@" UNM_S2_L002_R1_001.fastq > UNM_ERNA_number_of_rawreads.txt
+
+The S2 lane produced 2,397,857,739 reads.
+
 
 Number of reads **after** cleaning:
 
-    $ nohup grep -c "^@" CADE_FRVE1.clean.fastq > CADE_FRVE1_clean_reads.txt &
-    # number of clean reads : 
+    $ grep "^@" UNM_ERNA.clean.fastq -c > UNM_ERNA_No_ofcleanreads.txt &
+    $ less UNM_ERNA_No_ofcleanreads.txt
+    #  
 
-    $ nohup grep -c "^@" CADE_FRVE2.clean.fastq > CADE_FRVE2_clean_reads.txt &
-    # number of clean reads : 
+After contam cleaning: 1,870,796,668 reads remain
 
 ####################################################################################
 ## 2. Barcode parsing:
 ####################################################################################
 
-Be sure to deactivate conda environment before running the below steps. Barcode keyfiles are `/working/parchman/TEPE23/FRLA1_barcode_key.csv`
-`
-Parsing CADE_FRVE1 library:
+Barcode keyfile is `/working/parchman/UNM_ERNA/UNM_barcode_key.csv`
 
-    $ nohup perl parse_barcodes768.pl CADE_FRVE_barcode_info_2018.csv CADE_FRVE1.clean.fastq A00 &>/dev/null &
+Parsing commands:
 
-Parsing CADE_FRVE2 library:
+    $ nohup perl parse_barcodes768.pl UNM_barcode_key.csv UNM_ERNA.clean.fastq A00 &>/dev/null &
 
-    $ nohup perl parse_barcodes768.pl CADE_FRVE_barcode_info_2018.csv CADE_FRVE2.clean.fastq A00 &>/dev/null &
+
 
 `NOTE`: the A00 object is the code that identifies the sequencer (first three characters after the @ in the fastq identifier).
 
-    $ less parsereport_CADE_FRVE1.clean.fastq
+    $ less parsereport_UNM_ERNA.clean.fastq
+    Good mids count: 1764643859
+    Bad mids count: 106152661
+    Number of seqs with potential MSE adapter in seq: 380601
+    Seqs that were too short after removing MSE and beyond: 148
 
-    Good mids count: 644098458
-    Bad mids count: 25913131
-    Number of seqs with potential MSE adapter in seq: 197210
-    Seqs that were too short after removing MSE and beyond: 190
 
-    $ less parsereport_CADE_FRVE2.clean.fastq
+Cleaning up the RALU_round2 directory:
 
-    Good mids count: 668825901
-    Bad mids count: 47552067
-    Number of seqs with potential MSE adapter in seq: 648922
-    Seqs that were too short after removing MSE and beyond: 4257
+    $ rm UNM_ERNA.clean.fastq
+    $ rm miderrors_UNM_ERNA.clean.fastq
+    $ rm parsereport_UNM_ERNA.clean.fastq
+
 
 ####################################################################################
 ## 3. splitting fastqs
 ####################################################################################
 
-For FRLA, doing this in `/working/parchman/CADE_FRVE/splitfastqs_CADE_FRVE/` 
+These steps are being conducted in `/working/parchman/UNM_ERNA/splitfastqs`
 
-Concatenate the two parsed_*fastq files:
+Make ids file 
 
-    $ nohup cat parsed_CADE_FRVE1.clean.fastq parsed_CADE_FRVE2.clean.fastq > cat_parsed_CADE_FRVE12.clean.fastq &>/dev/null &
-
-Make ids file
-
-    $ cut -f 3 -d "," CADE_FRVE_barcode_info_2018.csv | grep "[A-Z]" > CADE_FRVE_ids_noheader.txt
-
+    $ cut -f 3 -d "," UNM_barcode_key.csv | grep "_" > UNM_ERNA_ids_noheader.txt
 
 Split fastqs by individual
 
-    $ nohup perl splitFastq_universal_regex.pl CADE_FRVE_ids_noheader.txt cat_CADE_FRVE_1and2.fastq &>/dev/null &
+    $ nohup perl splitFastq_universal_regex.pl UNM_ERNA_ids_noheader.txt parsed_UNM_ERNA.clean.fastq &>/dev/null &
 
+    # DONE TO HERE 
 
+************************************
 
-# DONE TO HERE &&&&&&&&&&
+Zip the parsed*fastq files for now, but delete once patterns and qc are verified:
 
+    $ gzip parsed_UNM_ERNA.clean.fastq
 
-Zip the parsed*fastq files for now, but delete once patterns and qc are verified.
+Total reads for muricata, radiata, and attenuata
+
 
 ### Moving fastqs to project specific directories
-
-Fastqs by species are located on ponderosa in:
-
-CASDEN:
-`/working/parchman/CADE_FRVE/splitfastqs_CADE_FRVE/CASDEN`
-
-FRVE:
-`/working/parchman/CADE_FRVE/splitfastqs_CADE_FRVE/FRVE`
-
-TROUT
-`/working/parchman/CADE_FRVE/splitfastqs_CADE_FRVE/TROUT`

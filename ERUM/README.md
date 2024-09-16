@@ -89,19 +89,21 @@ Parsing CADE_FRVE2 library:
 
 `NOTE`: the A00 object is the code that identifies the sequencer (first three characters after the @ in the fastq identifier).
 
-    $ less parsereport_CADE_FRVE1.clean.fastq
+    $ less parsereport_ERUM1.clean.fastq
+    
+    Good mids count: 556613585
+    Bad mids count: 32174171
+    Number of seqs with potential MSE adapter in seq: 68504
+    Seqs that were too short after removing MSE and beyond: 300
+    
 
-    Good mids count: 644098458
-    Bad mids count: 25913131
-    Number of seqs with potential MSE adapter in seq: 197210
-    Seqs that were too short after removing MSE and beyond: 190
+    $ less parsereport_ERUM2.clean.fastq
+    
+    Good mids count: 558940671
+    Bad mids count: 32945074
+    Number of seqs with potential MSE adapter in seq: 71220
+    Seqs that were too short after removing MSE and beyond: 322 
 
-    $ less parsereport_CADE_FRVE2.clean.fastq
-
-    Good mids count: 668825901
-    Bad mids count: 47552067
-    Number of seqs with potential MSE adapter in seq: 648922
-    Seqs that were too short after removing MSE and beyond: 4257
 
 ####################################################################################
 ## 3. splitting fastqs
@@ -111,16 +113,16 @@ For FRLA, doing this in `/working/parchman/CADE_FRVE/splitfastqs_CADE_FRVE/`
 
 Concatenate the two parsed_*fastq files:
 
-    $ nohup cat parsed_CADE_FRVE1.clean.fastq parsed_CADE_FRVE2.clean.fastq > cat_parsed_CADE_FRVE12.clean.fastq &>/dev/null &
+    $ nohup cat parsed_ERUM1.clean.fastq parsed_ERUM2.clean.fastq > cat_parsed_ERUM12.clean.fastq &>/dev/null &
 
 Make ids file
 
-    $ cut -f 3 -d "," CADE_FRVE_barcode_info_2018.csv | grep "[A-Z]" > CADE_FRVE_ids_noheader.txt
+    $ cut -f 3 -d "," ERUM_barcode_key.csv | grep "[A-Z]" > ERUM_ids_noheader.txt
 
 
 Split fastqs by individual
 
-    $ nohup perl splitFastq_universal_regex.pl CADE_FRVE_ids_noheader.txt cat_CADE_FRVE_1and2.fastq &>/dev/null &
+    $ nohup perl splitFastq_universal_regex.pl ERUM_ids_noheader.txt cat_parsed_ERUM12.clean.fastq &>/dev/null &
 
 
 
