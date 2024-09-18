@@ -108,15 +108,3 @@ Split fastqs by individual
 
 Zip the parsed*fastq files for now, but delete once patterns and qc are verified.
 
-### Moving fastqs to project specific directories
-
-Fastqs by species are located on ponderosa in:
-
-CASDEN:
-`/working/parchman/CADE_FRVE/splitfastqs_CADE_FRVE/CASDEN`
-
-FRVE:
-`/working/parchman/CADE_FRVE/splitfastqs_CADE_FRVE/FRVE`
-
-TROUT
-`/working/parchman/CADE_FRVE/splitfastqs_CADE_FRVE/TROUT`
