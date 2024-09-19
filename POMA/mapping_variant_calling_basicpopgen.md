@@ -1,4 +1,4 @@
-# Genotyping By Sequencing (GBS) Example Study
+# GBS data processing for POMA.
 
 This document presents our workflow and rationale for genotype inference from high throughput sequencing of reduced representation libraries (GBS, RADseq, ddRADseq, etc). Several canned software packages or computational workflows exist for handling this type of data. These methods rely on set thresholds for sequencing coverage depth per locus to call hard genotypes. The biggest cost of using these methods is throwing away much, if not most, of the data. Examples of such software/workflows include:
 
@@ -410,7 +410,9 @@ There is no reason to use 100 identical sequences for the denovo clustering task
    grep "^>" rf*[0-9] -c | awk -F"[:.]" '{print $2"\t"$3"\t"$4"\t"$5}' > assemblyComparison
    less assemblyComparison
    ```
-# TLP: Start POMA reference assembly here, remove above if we confirm that this reference is going to work well. We may want to compare de novo with reference based eventually.
+# TLP: Start POMA reference assembly here
+
+We can consider evaluating what a de novo assembly looks like if we have questionable results from mapping to the *H. comma* reference. This is doubtful to be an issue, but if it is too distant we could end up with low mapping rates. Note all above is from Seth's KRLA work, we should edit to provide important information or background on POMA.
 
 ## Mapping reads to reference genome with `bwa`
 
@@ -448,7 +450,7 @@ There is no reason to use 100 identical sequences for the denovo clustering task
    module load samtools/1.10
    ```
 
-2. Run the script `bwa_mem2sorted_bam.sh` using the following nohup settings. Here we are calling the bash script from within the bwa directory. Note the relative paths in `bwa_mem2sorted_bam.sh`
+2. Run the script `bwa_mem2sorted_bam.sh` using the following nohup settings. Here we are calling the bash script from within the bwa directory. Note the relative paths in 
 
    ```sh
    nohup bash ../scripts/bwa_mem2sorted_bam.sh 2> /dev/null &
@@ -460,7 +462,7 @@ There is no reason to use 100 identical sequences for the denovo clustering task
       tail -n 1 nohup.out
       ```
 
-   * This step took **~6 hours** using **24 nodes** on ponderosa for **497 individuals** in the KRLA dataset.
+   * This step took **~6 hours** using **24 nodes** on ponderosa for **93 individuals** in the POMA dataset.
 
 ### Explanation of `bwa_mem2sorted_bam.sh`
 
@@ -507,6 +509,8 @@ We should explain the steps that are happening here particularly any settings us
 * `samtools index` - indexes the .bam file for faster search, creating .bai files
   * `-@` - number of threads used (@24 = 24 threads)
 
+# TLP: Done to here
+
 ## Build pileup and variant call with BCFTools
 
 ### Prepare Directoties
@@ -526,62 +530,39 @@ find /bwa/ -type f -name *.sorted.bam > bam_list.txt
 
 ### Pileup, call, and filter
 
-1. Option 1 using `bcftools 1.3` (from Lainie)
-
-   * The following takes several (2-4) hours. NOTE: Run the following lines as one large chunk of code. Be sure to change reference name and output file.
-
-      ```sh
-      samtools mpileup -P ILLUMINA --BCF --max-depth 130 --adjust-MQ 50 --min-BQ 20 --min-MQ 20 --skip-indels --output-tags DP,AD --fasta-ref K_lanata.fa *sorted.bam | \
-      bcftools call -m --variants-only --format-fields GQ --skip-variants indels | \
-      bcftools filter --set-GTs . -i 'QUAL > 19 && FMT/GQ >9' | \
-      bcftools view -m 2 -M 2 -v snps --apply-filter "PASS" --output-type v  --output-file variants_rawfiltered_1FEB2024.vcf &
-      ```
-
-<<<<<<< Updated upstream
-2. Option 2 using `bcftools 1.9`:
-
+1. We will use `bcftools 1.9` and run the following:
    ```sh
    module load bcftools/1.9
-   bcftools mpileup -C 50 -d 250 -f K_lanata.fa -q 30 -Q 20 -I -b bam_list.txt -O b -o K_lanata.bcf
    ```
-=======
-Alternatively, we could use `bcftools 1.9` and run the following:
-```sh
-module load bcftools/1.9
-```
 
-```sh
-bcftools mpileup -a DP,AD,INFO/AD -C 50 -d 250 -f K_lanata.fa -q 30 -Q 20 -I -b bam_list.txt -o KRLA.bcf
-```
+   ```sh
+   bcftools mpileup -a DP,AD,INFO/AD -C 50 -d 250 -f GCA_905404245.1_ilHesComm1.1_alternate_haplotype_genomic.fna -q 30 -Q 20 -I -b bam_list.txt -o POMA.bcf
+   ```
 
-```sh
-bcftools call -v -m -f GQ KRLA.bcf -O z -o KRLA.vcf.gz
-```
+   ```sh
+   bcftools call -v -m -f GQ POMA.bcf -O z -o POMA.vcf.gz
+   ```
 
-```sh
-module load vcftools/0.1.14
-```
+   ```sh
+   module load vcftools/0.1.14
+   ```
 
-```sh
-vcftools \
---remove-indels \
---min-alleles 2 \
---max-alleles 2 \
---thin 100 \
---remove-filtered-all \
---recode \
---recode-INFO-all \
---gzvcf KRLA.vcf.gz \
---out 
-```
+   ```sh
+   vcftools \
+   --remove-indels \
+   --min-alleles 2 \
+   --max-alleles 2 \
+   --thin 100 \
+   --remove-filtered-all \
+   --recode \
+   --recode-INFO-all \
+   --gzvcf KRLA.vcf.gz \
+   --out 
+   ```
 
-```sh
-awk '$5 > 0.5 {print $1}' KRLA.imiss | tail -n +2 > indmiss50.txt
-```
-
-module load bcftools/1.9
-    $ bcftools mpileup -C 50 -d 250 -f K_lanata.fa -q 30 -Q 20 -I -b bam_list.txt -O b -o K_lanata.bcf
->>>>>>> Stashed changes
+   ```sh
+   awk '$5 > 0.5 {print $1}' KRLA.imiss | tail -n +2 > indmiss50.txt
+   ```
 
 ### Understanding bcftools parameters
 
