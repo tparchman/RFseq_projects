@@ -67,7 +67,7 @@ The S2 lane produced 2,397,857,739 reads.
 
 Number of reads **after** cleaning:
 
-    $ grep "^@" UNM_ERNA.clean.fastq -c > UNM_ERNA_No_ofcleanreads.txt &
+    $ grep "^@" UNM24.clean.fastq -c > UNM_ERNA_No_ofcleanreads.txt &
     $ less UNM_ERNA_No_ofcleanreads.txt
     #  
 
@@ -81,7 +81,7 @@ Barcode keyfile is `/working/parchman/UNM_ERNA/UNM_barcode_key.csv`
 
 Parsing commands:
 
-    $ nohup perl parse_barcodes768.pl UNM_barcode_key.csv UNM_ERNA.clean.fastq A00 &>/dev/null &
+    $ nohup perl parse_barcodes768.pl UNM_barcode_key.csv UNM24.clean.fastq A00 &>/dev/null &
 
 
 
