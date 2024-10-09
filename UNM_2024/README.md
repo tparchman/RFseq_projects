@@ -8,10 +8,7 @@ Sample orientation and sample ID information illustrated in `UNM_plate_maps_work
 
 **CRITICAL NOTE: mistake made in barcode pipetting on plate 2. Row E of DNA got barcode from row D, so corrected by putting barcode from E with row D of DNA. To fix, switch sample IDs in the plate maps/barcode keys.
 
-## Notes on cleaning NovaSeq flow cell from 12/22, barcode parsing, splitting fastqs, directory organization, and initial analyses.
-
-
-We generated one lanes of S2 chemistry NovaSeq data at UTGSAF in December of 2022.
+## Notes on cleaning NovaSeq flow cell from 8/24, barcode parsing, splitting fastqs, directory organization, and initial analyses.
 
 
 
@@ -27,13 +24,10 @@ We generated one lanes of S2 chemistry NovaSeq data at UTGSAF in December of 202
 
 ## 1. Cleaning contaminants
 
-Being executed on ponderosa using tapioca pipeline. Commands in bash script (cleaning_bash_UNM.sh), executed as below (2/10/23). This was for one S2 NovaSeq lanes generated in December 2022.
+Being executed on ponderosa using tapioca pipeline. Commands in bash script (cleaning_bash_UNM24.sh), executed as below . This was for one S1 NovaSeq lanes generated in August 2024.
 
 
-
-Contam cleaning being executed on ponderosa using tapioca pipeline. Commands in bash script (cleaning_bash_RALU.sh), executed as below (12/16/22). This was for one S1 NovaSeq lanes generated in December 2022. Contaminant cleaning and barcode parsing are being done in:
-
-    /working/parchman/UNM_ERNA/
+    /working/parchman/UNM24/
 
 
 Decompress fastq file:
@@ -43,10 +37,9 @@ Decompress fastq file:
 
 Number of reads **before** cleaning:
 
-    $ grep -c "^@" UNM_S2_L002_R1_001.fastq > UNM_ERNA_number_of_rawreads.txt
+    $ grep -c "^@" EN-AC24_S2_L002_R1_001.fastq > UNM24_number_of_rawreads.txt
 
-The S2 lane produced 2,397,857,739 reads.
-
+The S1 lane produced XXXXXXreads.
 
 
 Contaminant cleaning using tapioca steps below. On ponderosa or contorta, be sure to first deactivate the conda environment. `cleaning_bash_UNM.sh` bash script uses `bowtie` and several contaminant data bases to match reads with suspected contaminant presence and writes a clean.fastq file with those sequences removed.
