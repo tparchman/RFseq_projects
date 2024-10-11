@@ -42,6 +42,7 @@ Number of reads **before** cleaning:
 The S1 lane produced XXXXXXreads.
 
 
+
 Contaminant cleaning using tapioca steps below. On ponderosa or contorta, be sure to first deactivate the conda environment. `cleaning_bash_UNM.sh` bash script uses `bowtie` and several contaminant data bases to match reads with suspected contaminant presence and writes a clean.fastq file with those sequences removed.
 
     $ conda deactivate
@@ -49,18 +50,15 @@ Contaminant cleaning using tapioca steps below. On ponderosa or contorta, be sur
     $ module load fqutils/0.4.1
     $ module load bowtie2/2.2.5
     
-    $ nohup bash cleaning_bash_UNM.sh &>/dev/null &
+    $ nohup bash cleaning_bash_UNM24.sh &>/dev/null &
 
 
-After .clean.fastq has been produced, delete copy of raw data:
 
-    $ rm -rf RALU_S1_L001_R1_001.fastq
+Raw data will stay stored in: /archive/parchman_lab/rawdata_to_backup/UNM24/
 
-Raw data will stay stored in: /archive/parchman_lab/rawdata_to_backup/RALU_GSAF/
+Number of reads **after** cleaning:
 
-Number of reads **before** cleaning:
-
-    $ grep -c "^@" UNM_S2_L002_R1_001.fastq > UNM_ERNA_number_of_rawreads.txt
+    $ grep -c "^@" EN-AC24_S2_L002_R1_001.fastq > UNM_ERNA_number_of_cleanreads.txt
 
 The S2 lane produced 2,397,857,739 reads.
 
