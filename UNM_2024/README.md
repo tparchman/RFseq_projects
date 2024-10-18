@@ -85,33 +85,31 @@ Parsing commands:
 
 `NOTE`: the A00 object is the code that identifies the sequencer (first three characters after the @ in the fastq identifier).
 
-    $ less parsereport_UNM_ERNA.clean.fastq
-    Good mids count: 1764643859
-    Bad mids count: 106152661
-    Number of seqs with potential MSE adapter in seq: 380601
-    Seqs that were too short after removing MSE and beyond: 148
-
+    $ less parsereport_UNM24.clean.fastq
+    Good mids count: 725655573
+    Bad mids count: 25134744
+    Number of seqs with potential MSE adapter in seq: 142758
+    Seqs that were too short after removing MSE and beyond: 116
 
 Cleaning up the RALU_round2 directory:
 
-    $ rm UNM_ERNA.clean.fastq
-    $ rm miderrors_UNM_ERNA.clean.fastq
-    $ rm parsereport_UNM_ERNA.clean.fastq
+    $ rm UNM24.clean.fastq
+    $ rm miderrors_UNM24.clean.fastq
 
 
 ####################################################################################
 ## 3. splitting fastqs
 ####################################################################################
 
-These steps are being conducted in `/working/parchman/UNM_ERNA/splitfastqs`
+These steps are being conducted in `/working/parchman/UNM24/fastqs`
 
 Make ids file 
 
-    $ cut -f 3 -d "," UNM_barcode_key.csv | grep "_" > UNM_ERNA_ids_noheader.txt
+    $ cut -f 3 -d "," UNM24_barcode_key.csv | grep "_" > UNM24_ids_noheader.txt
 
 Split fastqs by individual
 
-    $ nohup perl splitFastq_universal_regex.pl UNM_ERNA_ids_noheader.txt parsed_UNM_ERNA.clean.fastq &>/dev/null &
+    $ nohup perl splitFastq_universal_regex.pl UNM24_ids_noheader.txt parsed_UNM24.clean.fastq &>/dev/null &
 
     # DONE TO HERE 
 
