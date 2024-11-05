@@ -18,7 +18,7 @@ echo "PhiX filtering done for lane 1"
 echo "ecoli filtering done for lane 1"
 
 
-cat /working/parchman/ELEL24/CADE-FRVE_S1_L001_R1_001.fastq | fqu_cull -r ELEL24_1.readstofilter.ill.txt ELEL24_1.readstofilter.phix.txt ELEL24_1.readstofilter.ecoli.txt > ELEL24_1.clean.fastq
+cat /working/parchman/ELEL24/ELEL1_S1_L001_R1_001.fastq | fqu_cull -r ELEL24_1.readstofilter.ill.txt ELEL24_1.readstofilter.phix.txt ELEL24_1.readstofilter.ecoli.txt > ELEL24_1.clean.fastq
 
 echo "Clean copy of lane 1 done"
 
