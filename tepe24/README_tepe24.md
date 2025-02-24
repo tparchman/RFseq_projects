@@ -38,25 +38,23 @@ Being executed on ponderosa using tapioca pipeline. Commands in bash script (cle
 
 Decompress fastq file:
 
-    $ gunzip NEO24lib1_S1_L001_R1_001.fastq.gz
-    $ gunzip NEO24lib1_S1_L002_R1_001.fastq.gz
+    $ gunzip TEPE24_S1_L001_R1_001.fastq.gz
 
 Number of reads **before** cleaning:
 
-    $ nohup grep -c "^@" NEO24lib1_S1_L001_R1_001.fastq > NEO241_number_of_rawreads.txt &
+    $ nohup grep -c "^@" TEPE24_S1_L001_R1_001.fastq > TEPE24_number_of_rawreads.txt &
     ## raw reads: 
 
-    $ nohup grep -c "^@" NEO24lib1_S1_L002_R1_001.fastq > NEO242_number_of_rawreads.txt &
-    ## raw reads:
+
 
 To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and run bash scripts.
 
     $ module load fqutils/0.4.1
     $ module load bowtie2/2.2.5
     
-    $ bash cleaning_bash_NEO24.sh &
+    $ bash cleaning_bash_TEPE24.sh &
 
-
+# DONE TO HERE
 
 After .clean.fastq has been produced, rm raw data:
 
