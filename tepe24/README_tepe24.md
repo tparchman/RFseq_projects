@@ -43,7 +43,7 @@ Decompress fastq file:
 Number of reads **before** cleaning:
 
     $ nohup grep -c "^@" TEPE24_S1_L001_R1_001.fastq > TEPE24_number_of_rawreads.txt &
-    ## raw reads: 
+    ## raw reads:1,012,467,102 
 
 
 
@@ -54,41 +54,36 @@ To run cleaning_bash* tapioca wrapper, exit conda environment, load modules, and
     
     $ bash cleaning_bash_TEPE24.sh &
 
-# DONE TO HERE
 
 After .clean.fastq has been produced, rm raw data:
 
-    $ rm -rf NEO24lib1_S1_L001_R1_001.fastq &
-    $ rm -rf NEO24lib1_S1_L002_R1_001.fastq &
+    $ rm -rf TEPE24_S1_L001_R1_001.fastq &
 
 
 Raw data will stay stored in: /archive/parchman_lab/rawdata_to_backup/NEO24/
 
-Before barcode parsing, cat two clean fastq files into one:
-
-    $ cat NEO_1.clean.fastq NEO_2.clean.fastq > NEO24_all.clean.fastq &
-
 
 Number of reads **after** cleaning:
 
-    $ nohup grep -c "^@" NEO24_all.clean.fastq > NEO24_all_clean_reads.txt &
+    $ nohup grep -c "^@" TEPE24.clean.fastq > TEPE24_clean_reads.txt &
     # number of clean reads : 
 
 ####################################################################################
 ## 2. Barcode parsing:
 ####################################################################################
 
-Be sure to deactivate conda environment before running the below steps. Barcode keyfile is `NEO24_barcode_key.csv`
+Be sure to deactivate conda environment before running the below steps. Barcode keyfile is `TEPE_barcodekey.csv`
 `
-Parsing combined NEO24 fastq files:
+Parsing TEPE24 fastq files:
 
-    $ nohup perl parse_barcodes768.pl NEO24_barcode_key.csv NEO24_all.clean.fastq A00 &>/dev/null &
+    $ nohup perl parse_barcodes768.pl TEPE24_barcodekey.csv TEPE24.clean.fastq A00 &>/dev/null &
 
+# DONE TO HERE
 
 
 `NOTE`: the A00 object is the code that identifies the sequencer (first three characters after the @ in the fastq identifier).
 
-    $ less parsereport_NEO24_all.clean.fastq 
+    $ less parsereport_TEPE24.clean.fastq 
 
     Good mids count: 1222139762
     Bad mids count: 60743086
