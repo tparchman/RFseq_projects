@@ -78,33 +78,30 @@ Parsing TEPE24 fastq files:
 
     $ nohup perl parse_barcodes768.pl TEPE24_barcodekey.csv TEPE24.clean.fastq A00 &>/dev/null &
 
-# DONE TO HERE
 
 
 `NOTE`: the A00 object is the code that identifies the sequencer (first three characters after the @ in the fastq identifier).
 
     $ less parsereport_TEPE24.clean.fastq 
 
-    Good mids count: 1222139762
-    Bad mids count: 60743086
-    Number of seqs with potential MSE adapter in seq: 569790
-    Seqs that were too short after removing MSE and beyond: 174
-
-
+    Good mids count: 676468496
+    Bad mids count: 27924977
+    Number of seqs with potential MSE adapter in seq: 206191
+    Seqs that were too short after removing MSE and beyond: 120
 ####################################################################################
 ## 3. splitting fastqs
 ####################################################################################
 
-For FRLA, doing this in `/working/parchman/NEO24_fastqs/splitfastqs`
+For FRLA, doing this in `/working/parchman/TEPE24/splitfastqs`
 
 Make ids file
 
-    $ cut -f 3 -d "," NEO24_barcode_key.csv | grep "_" > NEO24_ids_noheader.txt
+    $ cut -f 3 -d "," TEPE24_barcodekey.csv | grep "_" > TEPE24_ids_noheader.txt
 
 
 Split fastqs by individual
 
-    $ nohup perl splitFastq_universal_regex.pl NEO24_ids_noheader.txt parsed_NEO24_all.clean.fastq &>/dev/null &
+    $ nohup perl splitFastq_universal_regex.pl TEPE24_ids_noheader.txt parsed_TEPE24.clean.fastq &>/dev/null &
 
 
 
@@ -114,6 +111,8 @@ Split fastqs by individual
 Zip the parsed*fastq files
 
     $ nohup gzip *fastq &>/dev/null &
+
+Moved raw data to `/backups/rawdata_to_backup/TEPE24_GBS`
 
 ### syncing fastq files to Adkins directory on pronghorn:
 
