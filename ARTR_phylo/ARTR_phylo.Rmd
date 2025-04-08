@@ -1,0 +1,82 @@
+---
+title: "Artemisia phylogenetic analyses"
+author: "Tom Parchman"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    #toc: true
+    #toc_float: true
+    number_sections: true
+    theme: cerulean
+    highlight: tango
+  pdf_document: default
+  word_document: default
+---
+
+## Background
+
+Working with RADseq data generated as part of a larger landscape genomic analysis of *A. tridentata*, including 3 subspecies and both diploid and tetraploid populations. Through this and an additional round of sequencing (that was completed at a later date for our CALFIRE projects) we generated data for additional *Artemesia* species and two populations of unknown *Artemsia* collected by Jerry Tiehm.
+
+For the first round of analyses, I am using 4-5 individuals of each species, and 4-5 individuals of each *A. tridentata* subspecies.
+
+
+
+
+| Taxon     | Identifier      | No. of samples  | Ploidy?      |
+|---------------|---------------|---------------|---------------|
+| *A. t. tridentata* | AT       | 5        | 2n |
+| *A. t. wyomingensis* | AW     | 5        | 4n |
+| *A. t. vaseyana* | AV         | 5        | 2n, 4n |
+| *A. abuscula* | AA           | 5        | 2n, 4n|
+| *A. cana* | AC                | 5        | 2n, 4n |
+| *A. frigida* | AF             | 5        | 2n |
+| *A. rigida* | AR             | 5        | 2n |
+| *A. nova* | AN             | 5        | 2n, 4n |
+| *A. spinescens* | AS        | 5         | 2n |
+| *A. tripartita* | ATI     | 5         | 2n, 4n |
+|  Tiehm | \d+_\d+     | 10         | unknown |
+
+
+
+## Assembly and SNP calling using ipyrad
+
+
+#### Installing `ipyrad` in conda environment on ponderosa:
+
+```sh
+conda install -c conda-forge -c bioconda ipyrad
+
+```
+
+#### Start an ipyrad project
+
+Create a new project using the ipyrad command:
+
+```sh
+ipyrad -n artemisia_project
+
+```
+
+#### Edit the Configuration File
+
+Open the .params file with a text editor:
+
+```sh
+nano artemisia_project.params
+```
+- Objective 1
+- Objective 2
+- Objective 3
+
+# Data Preparation
+
+```{r setup, include=FALSE}
+# Load required libraries and set global options
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  warning = FALSE, 
+  message = FALSE
+)
+
+# Load libraries
+library(tidyverse)
