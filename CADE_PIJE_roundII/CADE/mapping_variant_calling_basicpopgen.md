@@ -141,24 +141,66 @@ This workflow begins with the gziped .fastq files in `/working/parchman/CALFIRE/
    cp /working/romero/scripts/selectContigs.sh .
    nohup bash selectContigs.sh 2 2 > k2.i2.seqs &
    nohup bash selectContigs.sh 3 2 > k3.i2.seqs &
+   nohup bash selectContigs.sh 3 3 > k3.i3.seqs &
+   nohup bash selectContigs.sh 4 3 > k4.i3.seqs &
+
    ```
-
    * The file k2.2.seqs will contain only sequences that meet these criteria
-      
-# TLP to here
 
+   * Number of seqs in each file:
+   ```sh
+   grep ">" k2.i2.seqs -c
+   23745300
+   grep ">" k3.i2.seqs -c
+   9688081
+   grep ">" k3.i3.seqs -c
+   5574095
+   grep ">" k4.i3.seqs -c
+   1732356
+   ```
 3. Use [CD-HIT](https://github.com/weizhongli/cdhit/wiki/3.-User's-Guide#user-content-CDHITEST) to create a denovo assembly from these reads, at a chosen clustering similarity threshold (c).
 
    ```sh
-   cd ../assembly
    module load cd-hit/4.6
    ```
 
    ```sh
-   nohup cd-hit-est -i <inputFile> -o <outputFile> -M 0 -T 0 -c 0.94 &>/dev/null &
+   nohup cd-hit-est -i k2.i2.seqs -o CADEdenovo_k2i2c94 -M 0 -T 0 -c 0.94 &>/dev/null &
+
+    nohup cd-hit-est -i k2.i2.seqs -o CADEdenovo_k2i2c92 -M 0 -T 0 -c 0.92 &>/dev/null &
+
+   nohup cd-hit-est -i k3.i2.seqs -o CADEdenovo_k3i2c92 -M 0 -T 0 -c 0.92 &>/dev/null &
+
+   nohup cd-hit-est -i k3.i2.seqs -o CADEdenovo_k3i2c94 -M 0 -T 0 -c 0.94 &>/dev/null &
+
+   nohup cd-hit-est -i k3.i3.seqs -o CADEdenovo_k3i3c92 -M 0 -T 0 -c 0.92 &>/dev/null &
+
+   nohup cd-hit-est -i k3.i3.seqs -o CADEdenovo_k3i3c94 -M 0 -T 0 -c 0.94 &>/dev/null &
+
+   #nohup cd-hit-est -i k4.i3.seqs -o CADEdenovo_k4i3c92 -M 0 -T 0 -c 0.92 &>/dev/null &
+
+   #nohup cd-hit-est -i k4.i3.seqs -o CADEdenovo_k4i3c94 -M 0 -T 0 -c 0.94 &>/dev/null &
    ```
 
-   * `<inputFile>` is your file from step 5 (../select_seqs/k4.i2.seqs)
+   Comparing denovo clustering results from above:
+
+   ```sh
+   grep ">" CADEdenovo_k2i2c94 -c
+   4064040
+   grep ">" CADEdenovo_k2i2c95 -c
+   4625726
+   grep ">" CADEdenovo_k3i2c92 -c
+   2185790
+   grep ">" CADEdenovo_k3i2c94 -c
+   2450479
+   grep ">" CADEdenovo_k3i3c92 -c
+   1441965
+   grep ">" CADEdenovo_k3i3c94 -c
+   1604592
+
+      ```
+
+   * `<inputFile>` is your file from above (`k2.i2.seqs`)
    * `<outputFile>` is the filename you want for your output. CD-HIT will generate 2 output files:
       * 1) outputFile (no extension)
       * 2) outputFile.clstr
@@ -169,18 +211,20 @@ This workflow begins with the gziped .fastq files in `/working/parchman/CALFIRE/
       * Higher values of c create more contigs and runs faster
       * Lower values of c create fewer contigs and runs slower
 
+# TLP to here
+
 4. Use [bwa index](https://bio-bwa.sourceforge.net/bwa.shtml) to index our assembly into fasta format for mapping individual reads
 
    ```sh
    module load bwa/0.7.17-r1188
-   bwa index -p POMA_ref rf.3.2.95
+   bwa index -p CADE_ref CADEdenovo_k3i3c94
    ```
 
    * `-p` lets us set the prefix name that will be attached to all output assembly files. Use something descriptive of the species you are working on.
    * `-a` (optional) allows you to choose the BWT construction algorithm
       * `is` (default) usually faster but limited to databases smaller than 2GB
-      * `bwtsw` for use on large databases (e.g. human genome)
-   * rf.4.6.94 is the denovo assembly from CD-HIT
+      * `bwtsw` for use on large databases (e.g. whole genomes)
+   * CADEdenovo_k3i3c94 is the denovo assembly from CD-HIT
 
    The result of this step should produce 5 new files named with your chosen prefix and the following extensions: `*.amb`, `*.ann`, `*.bwt`, `.pac`, `*.sa`
 
@@ -201,9 +245,8 @@ This workflow begins with the gziped .fastq files in `/working/parchman/CALFIRE/
    grep "^>" rf*[0-9] -c | awk -F"[:.]" '{print $2"\t"$3"\t"$4"\t"$5}' > assemblyComparison
    less assemblyComparison
    ```
-# TLP: Start POMA reference assembly here
+# TLP: Start CADE reference assembly here
 
-We can consider evaluating what a de novo assembly looks like if we have questionable results from mapping to the *H. comma* reference. This is doubtful to be an issue, but if it is too distant we could end up with low mapping rates. Note all above is from Seth's KRLA work, we should edit to provide important information or background on POMA.
 
 ## Mapping reads to reference genome with `bwa`
 
