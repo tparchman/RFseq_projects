@@ -177,9 +177,9 @@ This workflow begins with the gziped .fastq files in `/working/parchman/CALFIRE/
 
    nohup cd-hit-est -i k3.i3.seqs -o CADEdenovo_k3i3c94 -M 0 -T 0 -c 0.94 &>/dev/null &
 
-   #nohup cd-hit-est -i k4.i3.seqs -o CADEdenovo_k4i3c92 -M 0 -T 0 -c 0.92 &>/dev/null &
+   nohup cd-hit-est -i k4.i3.seqs -o CADEdenovo_k4i3c92 -M 0 -T 0 -c 0.92 &>/dev/null &
 
-   #nohup cd-hit-est -i k4.i3.seqs -o CADEdenovo_k4i3c94 -M 0 -T 0 -c 0.94 &>/dev/null &
+   nohup cd-hit-est -i k4.i3.seqs -o CADEdenovo_k4i3c94 -M 0 -T 0 -c 0.94 &>/dev/null &
    ```
 
    Comparing denovo clustering results from above:
@@ -197,7 +197,8 @@ This workflow begins with the gziped .fastq files in `/working/parchman/CALFIRE/
    1441965
    grep ">" CADEdenovo_k3i3c94 -c
    1604592
-
+   grep ">" CADEdenovo_k4i3c94 -c
+   605216
       ```
 
    * `<inputFile>` is your file from above (`k2.i2.seqs`)
@@ -224,7 +225,7 @@ This workflow begins with the gziped .fastq files in `/working/parchman/CALFIRE/
    * `-a` (optional) allows you to choose the BWT construction algorithm
       * `is` (default) usually faster but limited to databases smaller than 2GB
       * `bwtsw` for use on large databases (e.g. whole genomes)
-   * CADEdenovo_k3i3c94 is the denovo assembly from CD-HIT
+   * `CADEdenovo_k3i3c94` is the denovo assembly from CD-HIT that I decided to go ahead with. Less contigs will speed mapping but also funnel analyses towards better loci, perhaps. 
 
    The result of this step should produce 5 new files named with your chosen prefix and the following extensions: `*.amb`, `*.ann`, `*.bwt`, `.pac`, `*.sa`
 
@@ -245,23 +246,13 @@ This workflow begins with the gziped .fastq files in `/working/parchman/CALFIRE/
    grep "^>" rf*[0-9] -c | awk -F"[:.]" '{print $2"\t"$3"\t"$4"\t"$5}' > assemblyComparison
    less assemblyComparison
    ```
-# TLP: Start CADE reference assembly here
-
 
 ## Mapping reads to reference genome with `bwa`
 
-### *Hesperia comma* reference genome being used for read mapping. Must be indexed for efficient mapping with `bwa`
-
-1. Indexing reference genome with `bwa`
-
-   ```sh
-   module load bwa/0.7.17-r1188
-   bwa index -p hcomma -a bwtsw GCA_905404245.1_ilHesComm1.1_alternate_haplotype_genomic.fna &
-   ```
    
 ### Prepare Directories and Files
 
-1. Make a new directory from the species base (e.g. `.../POMA/`) called `bwa` and go into it
+1. Make a new directory from the species base (e.g. `.../CADE/`) called `bwa` and go into it
 
    ```sh
    cd ..
@@ -269,11 +260,7 @@ This workflow begins with the gziped .fastq files in `/working/parchman/CALFIRE/
    cd bwa
    ```
 
-2. Move **indexed** assembly files into bwa directory. In this case these all have the prefix **"hcomma"** based on the prior step.
-
-   ```sh
-   cp ../Hesperia_comma_genome/hcomma* .
-   ```
+2. Move **indexed** assembly files into bwa directory. 
 
 ### Map, sort and index
 
