@@ -274,7 +274,7 @@ This workflow begins with the gziped .fastq files in `/working/parchman/CALFIRE/
 2. Run the script `bwa_mem2sorted_bam.sh` using the following nohup settings. Here we are calling the bash script from within the bwa directory. Note the relative paths in 
 
    ```sh
-   nohup bash ../scripts/bwa_mem2sorted_bam.sh 2> /dev/null &
+   nohup bash bwa_mem2sorted_bam.sh 2> /dev/null &
    ```
 
    * Running the script in this way prevents the process from being interrupted (i.e. you can disconnect from the server while this runs) while also capturing progress print statements in `nohup.out`. You can re-login to the server and check the progress of mapping by going into the `bwa` directory and entering the following:
@@ -350,20 +350,19 @@ ls *.sorted.bam | sed 's/\*//' > bam_list.txt
 
 ### Pileup, call, and filter
 
-1. Lets do this in the `bwa/` directory, should now have all of the .bam and .bam.bai files as well as a copy of the reference genome (`GCA_905404245.1_ilHesComm1.1_alternate_haplotype_genomic.fna`, and associated index files `hcomma*`). We will use `bcftools 1.9` and run the following:
+1. Lets do this in the `bwa/` directory, should now have all of the .bam and .bam.bai files as well as a copy of the reference genome, and associated index files. We will use `bcftools 1.9` and run the following:
    ```sh
    module load bcftools/1.9
    ```
 
    ```sh
-   nohup bcftools mpileup -a DP,AD,INFO/AD -C 50 -d 250 -f rf.3.2.95 -q 30 -Q 20 -I -b bam_list.txt -o POMAdenovo.bcf 2> /dev/null &
-   ```
-## TLP 10.13.24 marker here
-   ```sh
-   bcftools call -v -m -f GQ POMAdenovo.bcf -O z -o POMAdenovo.vcf.gz
+   nohup bcftools mpileup -a DP,AD,INFO/AD -C 50 -d 250 -f rf.3.2.95 -q 30 -Q 20 -I -b bam_list.txt -o CADEdenovo.bcf 2> /dev/null &
    ```
 
-## TLP 10.13.24 marker here
+   ```sh
+   bcftools call -v -m -f GQ CADEdenovo.bcf -O z -o CADEdenovo.vcf.gz
+   ```
+
 
 
 ### Understanding bcftools parameters
@@ -452,47 +451,6 @@ vcftools --gzvcf POMA.vcf.gz --exclude indmiss50.txt --maf 0.04 --max-meanDP 100
 * **Qual:** Locus Quality. You can look up the math. Usually above 20-30 is good but given our coverage and number of individuals, we can usually go way higher.
 * **Fis:** Inbreeding coefficient. This is a contentous topic. This has to do with paralogs or paralogous loci. This is where loci map to multiple regions of the genome. Issues in highly repeative genomes. Usually leads to an excess of heterozygotes. Filtering on negative Fis can help. See these two McKinney papers [1](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.12763), and [2](https://onlinelibrary.wiley.com/doi/abs/10.1111/1755-0998.12613). Katie and others in the lab use his package called HDPlot to deal with this.
 
-## Uncategorized
-
-### Reference-based assembly (*T. podura*)
-
-1. Refernce file at: /working/parchman/tpodura/raw_ind_fastqs/Tpodura_consensus.fa
-2. Make index for `bwa`
-
-   ```sh
-   module load bwa/0.7.17-r1188
-   bwa index -p Tpodura_consensus -a bwtsw Tpodura_consensus.fa &
-   ```
-
-    * `bwa` wrapper, runbwa_memTLP.pl, modified to run the `mem` algorithim (rather than aln and samse), and used bwa 0.7.17-r1188. Parameter settings are described within the wrapper, more info with `bwa mem`
-
-      ```sh
-      module load bwa/0.7.17-r1188
-      perl runbwa_memTLP.pl  *fastq &
-      ```
-
-### Reheader vcf files?
-
-1. Make id file for reheadering
-
-   ```sh
-   ls *fastq > fastqs.txt
-   sed -s "s/.fastq//" fastqs.txt > Tpod_ids_col.txt
-   ```
-
-2. Reheader vcf
-
-   ```sh
-   module load bcftools/1.9
-   module load vcftools/0.1.14
-   bcftools reheader -s Tpod_ids_col.txt tpod.vcf -o rehead_tpod.vcf
-   ```
-
-3. Initial filtering
-
-   ```sh
-   vcftools --vcf rehead_tpod.vcf --out variants_maf5_miss5 --remove-filtered-all --maf 0.03 --max-missing 0.5 --recode --thin 100
-   ```
 
 ## Appendices
 
