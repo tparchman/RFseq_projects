@@ -212,7 +212,6 @@ This workflow begins with the gziped .fastq files in `/working/parchman/CALFIRE/
       * Higher values of c create more contigs and runs faster
       * Lower values of c create fewer contigs and runs slower
 
-# TLP to here
 
 4. Use [bwa index](https://bio-bwa.sourceforge.net/bwa.shtml) to index our assembly into fasta format for mapping individual reads
 
@@ -356,11 +355,12 @@ ls *.sorted.bam | sed 's/\*//' > bam_list.txt
    ```
 
    ```sh
-   nohup bcftools mpileup -a DP,AD,INFO/AD -C 50 -d 250 -f rf.3.2.95 -q 30 -Q 20 -I -b bam_list.txt -o CADEdenovo.bcf 2> /dev/null &
+   nohup bcftools mpileup -a DP,AD,INFO/AD -C 50 -d 250 -f CADE_ref.fa -q 30 -Q 20 -I -b bam_list.txt -o CADEdenovo.bcf 2> /dev/null &
    ```
+   
 
    ```sh
-   bcftools call -v -m -f GQ CADEdenovo.bcf -O z -o CADEdenovo.vcf.gz
+   nohup bcftools call -v -m -f GQ CADEdenovo.bcf -O z -o CADEdenovo.vcf.gz &
    ```
 
 
