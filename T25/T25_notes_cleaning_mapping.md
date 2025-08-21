@@ -8,7 +8,8 @@ I am building four libraries. To match Laura's reordering, the libraries will na
 
 ## Library construction
 
-- Blue library, started on 6/9/2025.
+- As of 8/20/25, all four libraries are done.
+- check bc set 4 on green library- those were getting low.
 
 
 # BELOW IS FOR LATER IF NEEDED.
